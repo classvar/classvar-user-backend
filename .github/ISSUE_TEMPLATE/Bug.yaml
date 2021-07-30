@@ -1,0 +1,26 @@
+name: Bug Report
+description: 버그를 상세히 묘사합니다.
+labels: [bug]
+body:
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: Bug 발생 시의 상황 묘사
+    validations:
+      required: true
+  - type: dropdown
+    id: browsers
+    attributes:
+      label: 확인한 브라우저 (optional, mutiple)
+      multiple: true
+      options:
+        - Firefox
+        - Chrome
+        - Safari
+        - Microsoft Edge
+  - type: textarea
+    id: logs
+    attributes:
+      label: 관련 Log 출력 첨부 (optional)
+      description: 붙여넣기만 하면 됩니다.
+      render: shell
