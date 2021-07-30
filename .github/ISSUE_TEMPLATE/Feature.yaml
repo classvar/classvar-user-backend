@@ -1,0 +1,30 @@
+name: Feature
+description: 새로 개발될 기능을 정의합니다.
+labels: [feature]
+body:
+  - type: textarea
+    id: what-to-develop
+    attributes:
+      label: 세부 목적 (주 목적은 이슈 이름으로.)
+      description: 세부 목적을 구체적으로 정의합니다.
+    validations:
+      required: true
+  - type: dropdown
+    id: difficulty
+    attributes:
+      label: 예상 난이도는?
+      options:
+        - Very Easy
+        - Easy
+        - Easy but time-consuming
+        - Hard
+        - Hard and time-consuming
+        - Very Hard
+        - Might be impossible
+    validations:
+      required: true
+  - type: textarea
+    id: develop-plan
+    attributes:
+      label: 개발 계획
+      description: 개발을 방법을 가능한 구체적으로 묘사합니다.
