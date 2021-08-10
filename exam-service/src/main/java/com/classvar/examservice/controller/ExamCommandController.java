@@ -13,6 +13,7 @@ import javax.validation.Valid;
 
 @RestController
 public class ExamCommandController {
+
   @Autowired private ExamCommandExecutor examCommandExecutor;
 
   @PostMapping("/exam")

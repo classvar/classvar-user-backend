@@ -1,5 +1,7 @@
 package com.classvar.examservice.domain;
 
+import com.classvar.examservice.controller.common.ErrorCode;
+import com.classvar.examservice.controller.common.ExamException;
 import lombok.Getter;
 
 import javax.persistence.*;
@@ -58,12 +60,16 @@ public class Exam {
     this.questions.add(question);
   }
 
-  public boolean removeQuestion(int questionId) {
-    return this.questions.removeIf(q -> q.getId() == questionId);
+  public void removeQuestion(int questionId) {
+    if (!this.questions.removeIf(q -> q.getId() == questionId)) {
+      throw new ExamException("문제가 존재하지 않습니다.", ErrorCode.NO_SUCH_QUESTION_ID);
+    }
   }
 
   public boolean updateQuestion(int questionId, Question question) {
-    if (!this.questions.removeIf(q -> q.getId() == questionId)) return false;
+    if (!this.questions.removeIf(q -> q.getId() == questionId)) {
+      throw new ExamException("문제가 존재하지 않습니다.", ErrorCode.NO_SUCH_QUESTION_ID);
+    }
     this.questions.add(question);
     return true;
   }
@@ -72,12 +78,16 @@ public class Exam {
     this.announcements.add(announcement);
   }
 
-  public boolean removeAnnouncement(int announcementId) {
-    return this.getAnnouncements().removeIf(a -> a.getId() == announcementId);
+  public void removeAnnouncement(int announcementId) {
+    if (!this.getAnnouncements().removeIf(a -> a.getId() == announcementId)) {
+      throw new ExamException("공지가 존재하지 않습니다.", ErrorCode.NO_SUCH_ANNOUNCEMENT_ID);
+    }
   }
 
   public boolean updateAnnouncement(int announcementId, Announcement announcement) {
-    if (!this.announcements.removeIf(a -> a.getId() == announcementId)) return false;
+    if (!this.announcements.removeIf(a -> a.getId() == announcementId)) {
+      throw new ExamException("공지가 존재하지 않습니다.", ErrorCode.NO_SUCH_ANNOUNCEMENT_ID);
+    }
     this.announcements.add(announcement);
     return true;
   }

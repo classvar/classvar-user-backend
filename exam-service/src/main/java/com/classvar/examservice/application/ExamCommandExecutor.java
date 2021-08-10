@@ -4,6 +4,8 @@ import com.classvar.examservice.application.common.EntityMapper;
 import com.classvar.examservice.application.dto.request.CreateOrUpdateAnnouncementDto;
 import com.classvar.examservice.application.dto.request.CreateOrUpdateExamDto;
 import com.classvar.examservice.application.dto.request.CreateOrUpdateQuestionDto;
+import com.classvar.examservice.controller.common.ErrorCode;
+import com.classvar.examservice.controller.common.ExamException;
 import com.classvar.examservice.domain.Announcement;
 import com.classvar.examservice.domain.Exam;
 import com.classvar.examservice.domain.ExamRepository;
@@ -30,7 +32,6 @@ public class ExamCommandExecutor {
   @Transactional
   public int createEmptyExam(CreateOrUpdateExamDto dto) {
     Exam toCreate = entityMapper.toExam(dto);
-    // Exam toCreate = CreateOrUpdateExamDto.dtoToEntity(dto);
     examRepository.save(toCreate);
     return toCreate.getId();
   }
@@ -43,7 +44,7 @@ public class ExamCommandExecutor {
     Exam exam =
         examRepository
             .findById(examId)
-            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 시험입니다."));
+            .orElseThrow(() -> new ExamException("존재하지 않는 시험입니다.", ErrorCode.NO_SUCH_EXAM_ID));
     if (exam.isExamInProgress()) return false;
     examRepository.delete(exam);
     return true;
@@ -57,8 +58,10 @@ public class ExamCommandExecutor {
     Exam exam =
         examRepository
             .findById(examId)
-            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 시험입니다."));
-    if (exam.isExamInProgress()) return false;
+            .orElseThrow(() -> new ExamException("존재하지 않는 시험입니다.", ErrorCode.NO_SUCH_EXAM_ID));
+    if (exam.isExamInProgress()) {
+      throw new ExamException("시험중에는 문제를 삭제할 수 없습니다.", ErrorCode.DELETE_QUESTION_DENIED);
+    }
     exam.changeName(dto.getName());
     exam.changeSchedule(dto.getBeginAt(), dto.getEndAt());
     return true;
@@ -69,7 +72,7 @@ public class ExamCommandExecutor {
     Exam exam =
         examRepository
             .findById(examId)
-            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 시험입니다."));
+            .orElseThrow(() -> new ExamException("존재하지 않는 시험입니다.", ErrorCode.NO_SUCH_EXAM_ID));
 
     Question toCreate = entityMapper.toQuestion(dto);
     exam.addQuestion(toCreate);
@@ -82,10 +85,12 @@ public class ExamCommandExecutor {
     Exam exam =
         examRepository
             .findById(examId)
-            .orElseThrow(() -> new IllegalArgumentException("시험지 존재하지 않거나 삭제할 문제가 없습니다."));
-    if (exam.isExamInProgress()) return false;
-
-    return exam.removeQuestion(questionId);
+            .orElseThrow(() -> new ExamException("존재하지 않는 시험입니다.", ErrorCode.NO_SUCH_EXAM_ID));
+    if (exam.isExamInProgress()) {
+      throw new ExamException("시험중에는 문제를 삭제할 수 없습니다.", ErrorCode.DELETE_QUESTION_DENIED);
+    }
+    exam.removeQuestion(questionId);
+    return true;
   }
 
   @Transactional
@@ -93,11 +98,10 @@ public class ExamCommandExecutor {
     Exam exam =
         examRepository
             .findById(examId)
-            .orElseThrow(() -> new IllegalArgumentException("시험이 존재하지 않거나 업데이트할 문제가 없습니다."));
+            .orElseThrow(() -> new ExamException("존재하지 않는 시험입니다.", ErrorCode.NO_SUCH_EXAM_ID));
 
     Question toUpdate = entityMapper.toQuestion(dto);
     exam.updateQuestion(questionId, toUpdate);
-    examRepository.save(exam);
     return true;
   }
 
@@ -106,7 +110,7 @@ public class ExamCommandExecutor {
     Exam exam =
         examRepository
             .findById(examId)
-            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 시험입니다."));
+            .orElseThrow(() -> new ExamException("존재하지 않는 시험입니다.", ErrorCode.NO_SUCH_EXAM_ID));
 
     Announcement toCreate = entityMapper.toAnnouncement(dto);
 
@@ -118,9 +122,10 @@ public class ExamCommandExecutor {
     Exam exam =
         examRepository
             .findById(examId)
-            .orElseThrow(() -> new IllegalArgumentException("시험이 존재하지 않거나 삭제할 공지가 없습니다."));
+            .orElseThrow(() -> new ExamException("존재하지 않는 시험입니다.", ErrorCode.NO_SUCH_EXAM_ID));
 
-    return exam.removeAnnouncement(announcementId);
+    exam.removeAnnouncement(announcementId);
+    return true;
   }
 
   @Transactional
@@ -129,11 +134,10 @@ public class ExamCommandExecutor {
     Exam exam =
         examRepository
             .findById(examId)
-            .orElseThrow(() -> new IllegalArgumentException("시험이 존재하지 않거나 업데이트할 공지가 없습니다."));
+            .orElseThrow(() -> new ExamException("존재하지 않는 시험입니다.", ErrorCode.NO_SUCH_EXAM_ID));
 
     Announcement toUpdate = entityMapper.toAnnouncement(dto);
     exam.updateAnnouncement(announcementId, toUpdate);
-    examRepository.save(exam);
     return true;
   }
 }

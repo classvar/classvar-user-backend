@@ -4,6 +4,8 @@ import com.classvar.examservice.application.common.EntityMapper;
 import com.classvar.examservice.application.dto.response.GetAnnouncementDto;
 import com.classvar.examservice.application.dto.response.GetExamDto;
 import com.classvar.examservice.application.dto.response.GetQuestionDto;
+import com.classvar.examservice.controller.common.ErrorCode;
+import com.classvar.examservice.controller.common.ExamException;
 import com.classvar.examservice.domain.AnnouncementRepository;
 import com.classvar.examservice.domain.ExamRepository;
 import com.classvar.examservice.domain.QuestionRepository;
@@ -35,28 +37,29 @@ public class ExamQueryProcessor {
     return entityMapper.toExamDto(
         examRepository
             .findById(examId)
-            .orElseThrow(() -> new IllegalArgumentException("시험이 존재하지 않습니다.")));
+            .orElseThrow(() -> new ExamException("시험이 존재하지 않습니다.", ErrorCode.NO_SUCH_EXAM_ID)));
   }
 
   public GetExamDto getExamWithQuestionAndAnnouncement(int examId) {
     return entityMapper.toExamDto(
         examRepository
             .findById(examId)
-            .orElseThrow(() -> new IllegalArgumentException("시험이 존재하지 않습니다.")));
+            .orElseThrow(() -> new ExamException("시험이 존재하지 않습니다.", ErrorCode.NO_SUCH_EXAM_ID)));
   }
 
   public GetQuestionDto getQuestionFromExamWithId(int examId, int questionId) {
     return entityMapper.toQuestionDto(
         questionRepository
             .findById(questionId)
-            .orElseThrow(() -> new IllegalArgumentException("문제가 존재하지 않습니다.")));
+            .orElseThrow(() -> new ExamException("문제가 존재하지 않습니다.", ErrorCode.NO_SUCH_QUESTION_ID)));
   }
 
   public GetAnnouncementDto getAnnouncementFromExamWithId(int examId, int announcementId) {
     return entityMapper.toAnnouncementDto(
         announcementRepository
             .findById(announcementId)
-            .orElseThrow(() -> new IllegalArgumentException("공지가 존재하지 않습니다.")));
+            .orElseThrow(
+                () -> new ExamException("공지가 존재하지 않습니다.", ErrorCode.NO_SUCH_ANNOUNCEMENT_ID)));
   }
 
   public List<GetQuestionDto> getQuestionListFromExamWithId(int examId) {
