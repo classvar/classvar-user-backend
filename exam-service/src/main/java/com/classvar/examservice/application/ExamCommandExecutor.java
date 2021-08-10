@@ -102,6 +102,8 @@ public class ExamCommandExecutor {
 
     Question toUpdate = entityMapper.toQuestion(dto);
     exam.updateQuestion(questionId, toUpdate);
+
+    examRepository.save(exam);
     return true;
   }
 
@@ -138,6 +140,8 @@ public class ExamCommandExecutor {
 
     Announcement toUpdate = entityMapper.toAnnouncement(dto);
     exam.updateAnnouncement(announcementId, toUpdate);
+
+    examRepository.save(exam);
     return true;
   }
 }
