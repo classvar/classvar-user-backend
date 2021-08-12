@@ -45,7 +45,20 @@ public interface EntityMapper {
     return question;
   }
 
-  GetQuestionDto toQuestionDto(Question question);
+  default GetQuestionDto toQuestionDto(Question question) {
+    GetQuestionDto questionDto =
+        new GetQuestionDto(
+            question.getId(),
+            question.getName(),
+            question.getType().toString(),
+            question.getDescription() == null
+                ? null
+                : question.getDescription().stream()
+                    .map(QuestionChoice::getContent)
+                    .collect(Collectors.toList()),
+            question.getPoint());
+    return questionDto;
+  }
 
   Announcement toAnnouncement(CreateOrUpdateAnnouncementDto dto);
 
