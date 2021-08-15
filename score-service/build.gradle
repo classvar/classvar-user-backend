@@ -2,6 +2,11 @@ plugins {
     id 'org.springframework.boot' version '2.5.3'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
+    id 'com.google.cloud.tools.jib' version '3.0.0'
+}
+
+ext {
+    BUILD_VERSION = new Date().format("yyyyMMddHHmmSS")
 }
 
 group = 'com.classvar'
@@ -30,4 +35,23 @@ dependencies {
 
 test {
     useJUnitPlatform()
+}
+
+jib {
+    from {
+        //베이스 이미지
+        image = 'openjdk:8-alpine'
+    }
+    to {
+        //업로드할 이미지 이름
+        image = "arsgsg/classvar_score-service"
+        //이미지의 태그
+        tags = ["${project.version}".toString(), "${BUILD_VERSION}".toString()]
+    }
+    container {
+        //실행될 메인 클래스의 경로
+        mainClass = "com.classvar.scoreservice.ScoreServiceApplication"
+        //expose시킬 포트 번호
+        ports = ["8080"]
+    }
 }
