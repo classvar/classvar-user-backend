@@ -14,6 +14,6 @@ import java.util.List;
 public class GetScoreWithTotalPointDto {
   private String name;
   private String email;
-  private List<AnswerSheetDto> answers;
+  private List<TempUserAnswerDto> answers;
   private int totalScore;
 }

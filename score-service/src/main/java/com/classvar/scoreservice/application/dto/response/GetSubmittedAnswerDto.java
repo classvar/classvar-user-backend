@@ -1,17 +1,14 @@
-package com.classvar.scoreservice.application.dto;
+package com.classvar.scoreservice.application.dto.response;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
 @Setter
-public class AnswerSheetDto {
+public class GetSubmittedAnswerDto {
   private Integer id;
-  private String question;
+  private TempQuestionDto question;
   private String answer;
-  private int point;
 }
