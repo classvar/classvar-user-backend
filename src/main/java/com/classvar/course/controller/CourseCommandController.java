@@ -1,8 +1,7 @@
 package com.classvar.course.controller;
 
 import com.classvar.course.application.CourseCommandExecutor;
-import com.classvar.course.application.dto.request.CreateOrUpdateCourseDto;
-import com.classvar.course.application.dto.request.CreateOrUpdateExamDto;
+import com.classvar.course.application.dto.request.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -68,6 +67,47 @@ public class CourseCommandController {
       @PathVariable("courseId") long courseId, @PathVariable("examId") long examId) {
 
     courseCommandExecutor.deleteExamToCourse(courseId, examId);
+
+    return ResponseEntity.status(HttpStatus.OK).build();
+  }
+
+  @PostMapping(value = "/courses/{courseId}/students")
+  public ResponseEntity createStudent(
+          @PathVariable("courseId") long courseId,
+          @Valid @RequestBody CreateStudentsDto dto){
+
+    courseCommandExecutor.createStudentsToCourse(courseId, dto);
+
+    return ResponseEntity.status(HttpStatus.OK).build();
+  }
+
+  @PutMapping(value = "courses/{courseId}/students/registry/{uuid}")
+  public ResponseEntity registerStudent(
+          @PathVariable("courseId") long courseId,
+          @PathVariable("uuid") String uuid,
+          @Valid @RequestBody UpdateStudentInfoDto dto){
+
+    courseCommandExecutor.updateStudentToCourse(courseId, uuid, dto);
+
+    return ResponseEntity.status(HttpStatus.OK).build();
+  }
+
+  @PostMapping(value = "courses/{courseId}/students/verify")
+  public ResponseEntity approveStudents(
+          @PathVariable("courseId") long courseId,
+          @Valid @RequestBody VerifyOrDeleteStudentsDto dto){
+
+    courseCommandExecutor.approveStudentToCourse(courseId, dto);
+
+    return ResponseEntity.status(HttpStatus.OK).build();
+  }
+
+  @PostMapping(value = "/courses/{courseId}/students/delete")
+  public ResponseEntity deleteStudents(
+          @PathVariable("courseId") long courseId,
+          @Valid @RequestBody VerifyOrDeleteStudentsDto dto){
+
+    courseCommandExecutor.deleteStudentToCourse(courseId, dto);
 
     return ResponseEntity.status(HttpStatus.OK).build();
   }

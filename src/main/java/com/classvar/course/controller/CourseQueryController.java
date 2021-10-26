@@ -4,6 +4,7 @@ import com.classvar.course.application.CourseQueryProcessor;
 import com.classvar.course.application.dto.response.GetCourseListDto;
 import com.classvar.course.application.dto.response.GetExamDetailDto;
 import com.classvar.course.application.dto.response.GetExamListDto;
+import com.classvar.course.application.dto.response.GetStudentListDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,5 +43,12 @@ public class CourseQueryController {
     GetExamListDto exams = new GetExamListDto(courseQueryProcessor.getExamList(courseId));
 
     return ResponseEntity.status(HttpStatus.OK).body(exams);
+  }
+
+  @GetMapping(value = "/courses/{courseId}/students")
+  public ResponseEntity getAllStudentInfo(@PathVariable("courseId") long courseId){
+    GetStudentListDto students = courseQueryProcessor.getStudentList(courseId);
+
+    return ResponseEntity.status(HttpStatus.OK).body(students);
   }
 }
