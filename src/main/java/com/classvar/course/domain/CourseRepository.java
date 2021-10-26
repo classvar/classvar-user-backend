@@ -15,4 +15,6 @@ public interface CourseRepository {
   Optional<Course> findCourseById(Long courseId);
 
   Set<Exam> findAllExamWithCourseId(Long courseId);
+
+  Set<Student> findAllStudentWithCourseId(Long courseId);
 }
