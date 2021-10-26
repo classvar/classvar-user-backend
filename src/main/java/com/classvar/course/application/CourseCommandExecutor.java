@@ -90,7 +90,7 @@ public class CourseCommandExecutor {
                     .findCourseById(courseId)
                     .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 코스 입니다."));
 
-    dto.getEmails().forEach(email -> course.addStudent(new Student(email)));
+    entityMapper.toStudents(dto).forEach(course::addStudent);
 
     //createdEvent 발생 -> 학생에게 등록하는 url 포함된 email 전송
   }
@@ -113,7 +113,7 @@ public class CourseCommandExecutor {
                     .findCourseById(courseId)
                     .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 코스 입니다."));
 
-    dto.getStudents().forEach(id -> course.approveStudent(id));
+    dto.getStudents().forEach(course::approveStudent);
 
     //approvedEvent 발생 -> 학생에게 시험장 url 포함된 email 전송
   }
@@ -125,6 +125,6 @@ public class CourseCommandExecutor {
                     .findCourseById(courseId)
                     .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 코스 입니다."));
 
-    dto.getStudents().forEach(id -> course.deleteStudent(id));
+    dto.getStudents().forEach(course::deleteStudent);
   }
 }
