@@ -3,6 +3,7 @@ package com.classvar.course.infra;
 import com.classvar.course.domain.Course;
 import com.classvar.course.domain.CourseRepository;
 import com.classvar.course.domain.Exam;
+import com.classvar.course.domain.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -15,4 +16,7 @@ public interface JpaCourseRepository extends JpaRepository<Course, Long>, Course
 
   @Query("select c.exams from Course c where c.id =:courseId")
   Set<Exam> findAllExamWithCourseId(@Param("courseId") Long courseId);
+
+  @Query("select c.students from Course c where c.id =:courseId")
+  Set<Student> findAllStudentWithCourseId(@Param("courseId") Long courseId);
 }

@@ -1,12 +1,11 @@
 package com.classvar.course.application;
 
 import com.classvar.course.application.common.EntityMapper;
-import com.classvar.course.application.dto.response.GetCourseDto;
-import com.classvar.course.application.dto.response.GetExamDetailDto;
-import com.classvar.course.application.dto.response.GetExamInfoDto;
+import com.classvar.course.application.dto.response.*;
 import com.classvar.course.domain.CourseRepository;
 import com.classvar.course.domain.Exam;
 import com.classvar.course.domain.ExamRepository;
+import com.classvar.course.domain.StudentRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
@@ -47,5 +46,14 @@ public class CourseQueryProcessor {
     return courseRepository.findAllExamWithCourseId(courseId).stream()
         .map(exam -> entityMapper.toExamInfoDto(exam))
         .collect(Collectors.toList());
+  }
+
+  public GetStudentListDto getStudentList(long courseId){
+    List<GetStudentDto> students = courseRepository.findAllStudentWithCourseId(courseId).stream()
+            .map(student -> entityMapper.toStudentInfoDto(student))
+
+            .collect(Collectors.toList());
+
+    return new GetStudentListDto(students);
   }
 }
