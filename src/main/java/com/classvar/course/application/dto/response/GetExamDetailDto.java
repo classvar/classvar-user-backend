@@ -5,6 +5,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -13,9 +16,9 @@ public class GetExamDetailDto {
 
   private String name;
 
-  private String examDate;
+  private LocalDate examDate;
 
-  private String startTime;
+  private LocalTime startTime;
 
-  private String endTime;
+  private LocalTime endTime;
 }
