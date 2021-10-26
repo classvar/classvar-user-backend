@@ -55,7 +55,7 @@ public class Course {
   }
 
   public void approveStudent(long studentId){
-    for (Student student : students) {
+    for (Student student : this.students) {
       if(student.getId() == studentId){
         student.isVerified();
       }
