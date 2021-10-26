@@ -5,8 +5,10 @@ import com.classvar.course.application.dto.request.CreateOrUpdateExamDto;
 import com.classvar.course.application.dto.response.GetCourseDto;
 import com.classvar.course.application.dto.response.GetExamDetailDto;
 import com.classvar.course.application.dto.response.GetExamInfoDto;
+import com.classvar.course.application.dto.response.GetStudentDto;
 import com.classvar.course.domain.Course;
 import com.classvar.course.domain.Exam;
+import com.classvar.course.domain.Student;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -25,4 +27,6 @@ public interface EntityMapper {
   default GetExamInfoDto toExamInfoDto(Exam exam) {
     return new GetExamInfoDto(exam.getId(), exam.getName());
   }
+
+  GetStudentDto toStudentInfoDto(Student student);
 }
