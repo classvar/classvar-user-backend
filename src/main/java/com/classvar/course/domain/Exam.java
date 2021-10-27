@@ -5,6 +5,7 @@ import lombok.Getter;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Objects;
 
 @Getter
 @Entity
@@ -47,5 +48,19 @@ public class Exam {
     this.examDate = examDate;
     this.startTime = startTime;
     this.endTime = endTime;
+  }
+
+  @Override
+  public boolean equals(Object another) {
+    if (another == null) return false;
+    if (!(another instanceof Exam)) return false;
+    if (this == another) return true;
+
+    return this.id == ((Exam) another).id;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(this.id, this.name, this.examDate, this.startTime, this.endTime);
   }
 }
