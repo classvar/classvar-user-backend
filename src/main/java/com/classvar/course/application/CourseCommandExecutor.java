@@ -1,11 +1,11 @@
 package com.classvar.course.application;
 
 import com.classvar.course.application.common.EntityMapper;
-import com.classvar.course.application.dto.request.CreateOrUpdateCourseDto;
-import com.classvar.course.application.dto.request.CreateOrUpdateExamDto;
+import com.classvar.course.application.dto.request.*;
 import com.classvar.course.domain.Course;
 import com.classvar.course.domain.CourseRepository;
 import com.classvar.course.domain.Exam;
+import com.classvar.course.domain.Student;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

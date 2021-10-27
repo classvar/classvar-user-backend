@@ -15,14 +15,7 @@ public class Course {
 
   private String name;
 
-  @OneToMany(
-      mappedBy = "course",
-      fetch =
-          FetchType
-              .LAZY, // courseList findAll() 조회할때 Eager로 설정하면 select course1번 그 안에 있는 exam n번 쿼리가
-                     // 나간다.
-      cascade = CascadeType.ALL,
-      orphanRemoval = true)
+  @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
   private Set<Exam> exams = new HashSet<>();
 
   @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -49,14 +42,14 @@ public class Course {
     }
   }
 
-  public void addStudent(Student student){
+  public void addStudent(Student student) {
     student.setCourse(this);
     this.students.add(student);
   }
 
-  public void approveStudent(long studentId){
+  public void approveStudent(long studentId) {
     for (Student student : this.students) {
-      if(student.getId() == studentId){
+      if (student.getId() == studentId) {
         student.isVerified();
       }
     }
