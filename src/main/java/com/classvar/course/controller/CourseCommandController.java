@@ -26,7 +26,7 @@ public class CourseCommandController {
   }
 
   @PutMapping(value = "/courses/{courseId}")
-  public ResponseEntity createCourse(
+  public ResponseEntity updateCourse(
       @PathVariable("courseId") long courseId, @Valid @RequestBody CreateOrUpdateCourseDto dto) {
 
     courseCommandExecutor.updateCourse(courseId, dto);
@@ -73,8 +73,7 @@ public class CourseCommandController {
 
   @PostMapping(value = "/courses/{courseId}/students")
   public ResponseEntity createStudent(
-          @PathVariable("courseId") long courseId,
-          @Valid @RequestBody CreateStudentsDto dto){
+      @PathVariable("courseId") long courseId, @Valid @RequestBody CreateStudentsDto dto) {
 
     courseCommandExecutor.createStudentsToCourse(courseId, dto);
 
@@ -83,9 +82,9 @@ public class CourseCommandController {
 
   @PutMapping(value = "courses/{courseId}/students/registry/{uuid}")
   public ResponseEntity registerStudent(
-          @PathVariable("courseId") long courseId,
-          @PathVariable("uuid") String uuid,
-          @Valid @RequestBody UpdateStudentInfoDto dto){
+      @PathVariable("courseId") long courseId,
+      @PathVariable("uuid") String uuid,
+      @Valid @RequestBody UpdateStudentInfoDto dto) {
 
     courseCommandExecutor.updateStudentToCourse(courseId, uuid, dto);
 
@@ -94,8 +93,7 @@ public class CourseCommandController {
 
   @PostMapping(value = "courses/{courseId}/students/verify")
   public ResponseEntity approveStudents(
-          @PathVariable("courseId") long courseId,
-          @Valid @RequestBody VerifyOrDeleteStudentsDto dto){
+      @PathVariable("courseId") long courseId, @Valid @RequestBody VerifyOrDeleteStudentsDto dto) {
 
     courseCommandExecutor.approveStudentToCourse(courseId, dto);
 
@@ -104,8 +102,7 @@ public class CourseCommandController {
 
   @PostMapping(value = "/courses/{courseId}/students/delete")
   public ResponseEntity deleteStudents(
-          @PathVariable("courseId") long courseId,
-          @Valid @RequestBody VerifyOrDeleteStudentsDto dto){
+      @PathVariable("courseId") long courseId, @Valid @RequestBody VerifyOrDeleteStudentsDto dto) {
 
     courseCommandExecutor.deleteStudentToCourse(courseId, dto);
 

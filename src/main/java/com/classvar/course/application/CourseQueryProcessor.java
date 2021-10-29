@@ -1,11 +1,10 @@
 package com.classvar.course.application;
 
-import com.classvar.course.application.common.EntityMapper;
+import com.classvar.course.application.common.CourseMapper;
 import com.classvar.course.application.dto.response.*;
 import com.classvar.course.domain.CourseRepository;
 import com.classvar.course.domain.Exam;
 import com.classvar.course.domain.ExamRepository;
-import com.classvar.course.domain.StudentRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
@@ -18,18 +17,18 @@ public class CourseQueryProcessor {
 
   private CourseRepository courseRepository;
   private ExamRepository examRepository;
-  private EntityMapper entityMapper;
+  private CourseMapper courseMapper;
 
   public CourseQueryProcessor(
-      CourseRepository courseRepository, ExamRepository examRepository, EntityMapper entityMapper) {
+      CourseRepository courseRepository, ExamRepository examRepository, CourseMapper courseMapper) {
     this.courseRepository = courseRepository;
     this.examRepository = examRepository;
-    this.entityMapper = entityMapper;
+    this.courseMapper = courseMapper;
   }
 
   public List<GetCourseDto> getCourseList() {
     return courseRepository.findAll().stream()
-        .map(course -> entityMapper.toCourseDto(course))
+        .map(course -> courseMapper.toCourseDto(course))
         .collect(Collectors.toList());
   }
 
@@ -39,19 +38,19 @@ public class CourseQueryProcessor {
             .findExamWithCourseIdAndExamId(courseId, examId)
             .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 시험 입니다."));
 
-    return entityMapper.toExamDetailDto(exam);
+    return courseMapper.toExamDetailDto(exam);
   }
 
   public List<GetExamInfoDto> getExamList(long courseId) {
     return courseRepository.findAllExamWithCourseId(courseId).stream()
-        .map(exam -> entityMapper.toExamInfoDto(exam))
+        .map(exam -> courseMapper.toExamInfoDto(exam))
         .collect(Collectors.toList());
   }
 
-  public GetStudentListDto getStudentList(long courseId){
-    List<GetStudentDto> students = courseRepository.findAllStudentWithCourseId(courseId).stream()
-            .map(student -> entityMapper.toStudentInfoDto(student))
-
+  public GetStudentListDto getStudentList(long courseId) {
+    List<GetStudentDto> students =
+        courseRepository.findAllStudentWithCourseId(courseId).stream()
+            .map(student -> courseMapper.toStudentInfoDto(student))
             .collect(Collectors.toList());
 
     return new GetStudentListDto(students);
