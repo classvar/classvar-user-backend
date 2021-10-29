@@ -11,24 +11,30 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 public class LoginUserArgumentResolver implements HandlerMethodArgumentResolver {
-    @Override
-    public boolean supportsParameter(MethodParameter parameter) {
-        boolean hasLoginAnnotation = parameter.hasParameterAnnotation(Login.class);
-        boolean hasType = Long.class.isAssignableFrom(parameter.getParameterType());
+  @Override
+  public boolean supportsParameter(MethodParameter parameter) {
+    boolean hasLoginAnnotation = parameter.hasParameterAnnotation(Login.class);
+    boolean hasType = Long.class.isAssignableFrom(parameter.getParameterType());
 
-        return hasLoginAnnotation && hasType;
+    return hasLoginAnnotation && hasType;
+  }
+
+  @Override
+  public Object resolveArgument(
+      MethodParameter parameter,
+      ModelAndViewContainer mavContainer,
+      NativeWebRequest webRequest,
+      WebDataBinderFactory binderFactory)
+      throws Exception {
+
+    HttpServletRequest request = (HttpServletRequest) webRequest.getNativeRequest();
+
+    HttpSession session = request.getSession(false);
+
+    if (session == null) {
+      return null;
     }
 
-    @Override
-    public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
-
-        HttpServletRequest request = (HttpServletRequest) webRequest.getNativeRequest();
-        HttpSession session = request.getSession(false);
-
-        if(session == null){
-            return null;
-        }
-
-        return session.getAttribute(SessionConst.LOGIN_ID);
-    }
+    return session.getAttribute(SessionConst.LOGIN_ID);
+  }
 }

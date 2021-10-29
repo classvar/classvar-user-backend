@@ -8,13 +8,24 @@ import javax.persistence.*;
 @Getter
 public class User {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    @Column(unique = true)
-    String email;
-    String password;
+  @Column(unique = true)
+  private String email;
 
-    String name;
-    String department;
+  private String password;
+
+  private String name;
+  private String department;
+
+  public User(String emil, String password, String name, String department) {
+    this.email = emil;
+    this.password = password;
+    this.name = name;
+    this.department = department;
+  }
+
+  protected User() {}
 }

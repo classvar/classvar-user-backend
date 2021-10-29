@@ -10,8 +10,9 @@ import javax.validation.constraints.NotEmpty;
 @NoArgsConstructor
 @AllArgsConstructor
 public class LoginDto {
-    @NotEmpty(message = "email 필드는 비어 있을 수 없습니다")
-    private String email;
-    @NotEmpty(message = "password 필드는 비어 있을 수 없습니다")
-    private String password;
+  @NotEmpty(message = "email 필드는 비어 있을 수 없습니다")
+  private String email;
+
+  @NotEmpty(message = "password 필드는 비어 있을 수 없습니다")
+  private String password;
 }
