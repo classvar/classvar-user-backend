@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
-public interface EntityMapper {
+public interface CourseMapper {
 
   Course toCourse(CreateOrUpdateCourseDto dto);
 
@@ -34,7 +34,7 @@ public interface EntityMapper {
 
   GetStudentDto toStudentInfoDto(Student student);
 
-  default List<Student> toStudents(CreateStudentsDto dto){
+  default List<Student> toStudents(CreateStudentsDto dto) {
     return dto.getEmails().stream().map(Student::new).collect(Collectors.toList());
   }
 }

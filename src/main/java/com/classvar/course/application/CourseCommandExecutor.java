@@ -1,6 +1,6 @@
 package com.classvar.course.application;
 
-import com.classvar.course.application.common.EntityMapper;
+import com.classvar.course.application.common.CourseMapper;
 import com.classvar.course.application.dto.request.*;
 import com.classvar.course.domain.Course;
 import com.classvar.course.domain.CourseRepository;
@@ -13,16 +13,16 @@ import org.springframework.transaction.annotation.Transactional;
 public class CourseCommandExecutor {
 
   private CourseRepository courseRepository;
-  private EntityMapper entityMapper;
+  private CourseMapper courseMapper;
 
-  public CourseCommandExecutor(CourseRepository courseRepository, EntityMapper entityMapper) {
+  public CourseCommandExecutor(CourseRepository courseRepository, CourseMapper courseMapper) {
     this.courseRepository = courseRepository;
-    this.entityMapper = entityMapper;
+    this.courseMapper = courseMapper;
   }
 
   @Transactional
   public long createCourse(CreateOrUpdateCourseDto dto) {
-    Course course = entityMapper.toCourse(dto);
+    Course course = courseMapper.toCourse(dto);
     courseRepository.save(course);
     return course.getId();
   }
@@ -55,7 +55,7 @@ public class CourseCommandExecutor {
             .findCourseById(courseId)
             .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 코스 입니다."));
 
-    Exam exam = entityMapper.toExam(dto);
+    Exam exam = courseMapper.toExam(dto);
 
     course.addExam(exam);
   }
@@ -82,46 +82,47 @@ public class CourseCommandExecutor {
   }
 
   @Transactional
-  public void createStudentsToCourse(long courseId, CreateStudentsDto dto){
+  public void createStudentsToCourse(long courseId, CreateStudentsDto dto) {
     Course course =
-            courseRepository
-                    .findCourseById(courseId)
-                    .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 코스 입니다."));
+        courseRepository
+            .findCourseById(courseId)
+            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 코스 입니다."));
 
-    entityMapper.toStudents(dto).forEach(course::addStudent);
+    courseMapper.toStudents(dto).forEach(course::addStudent);
 
-    //createdEvent 발생 -> 학생에게 등록하는 url 포함된 email 전송
+    // createdEvent 발생 -> 학생에게 등록하는 url 포함된 email 전송
   }
 
   @Transactional
-  public void updateStudentToCourse(long courseId, String uuid, UpdateStudentInfoDto dto){
+  public void updateStudentToCourse(long courseId, String uuid, UpdateStudentInfoDto dto) {
     Student student =
-            courseRepository.findAllStudentWithCourseId(courseId).stream()
-                    .filter(s -> s.getUuid().equals(uuid))
-                    .findFirst()
-                    .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 응시자 입니다."));
+        courseRepository.findAllStudentWithCourseId(courseId).stream()
+            .filter(s -> s.getUuid().equals(uuid))
+            .findFirst()
+            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 응시자 입니다."));
 
-    student.updateStudentInfo(dto.getStudentName(), dto.getDepartment(), dto.getStudentId(), dto.getStudentEmail());
+    student.updateStudentInfo(
+        dto.getStudentName(), dto.getDepartment(), dto.getStudentId(), dto.getStudentEmail());
   }
 
   @Transactional
-  public void approveStudentToCourse(long courseId, VerifyOrDeleteStudentsDto dto){
+  public void approveStudentToCourse(long courseId, VerifyOrDeleteStudentsDto dto) {
     Course course =
-            courseRepository
-                    .findCourseById(courseId)
-                    .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 코스 입니다."));
+        courseRepository
+            .findCourseById(courseId)
+            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 코스 입니다."));
 
     dto.getStudents().forEach(course::approveStudent);
 
-    //approvedEvent 발생 -> 학생에게 시험장 url 포함된 email 전송
+    // approvedEvent 발생 -> 학생에게 시험장 url 포함된 email 전송
   }
 
   @Transactional
-  public void deleteStudentToCourse(long courseId, VerifyOrDeleteStudentsDto dto){
+  public void deleteStudentToCourse(long courseId, VerifyOrDeleteStudentsDto dto) {
     Course course =
-            courseRepository
-                    .findCourseById(courseId)
-                    .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 코스 입니다."));
+        courseRepository
+            .findCourseById(courseId)
+            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 코스 입니다."));
 
     dto.getStudents().forEach(course::deleteStudent);
   }
