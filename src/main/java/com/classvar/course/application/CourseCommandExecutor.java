@@ -2,23 +2,21 @@ package com.classvar.course.application;
 
 import com.classvar.course.application.common.CourseMapper;
 import com.classvar.course.application.dto.request.*;
-import com.classvar.course.domain.Course;
-import com.classvar.course.domain.CourseRepository;
-import com.classvar.course.domain.Exam;
-import com.classvar.course.domain.Student;
+import com.classvar.course.domain.*;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.util.Set;
+
 @Service
+@RequiredArgsConstructor
 public class CourseCommandExecutor {
 
-  private CourseRepository courseRepository;
-  private CourseMapper courseMapper;
-
-  public CourseCommandExecutor(CourseRepository courseRepository, CourseMapper courseMapper) {
-    this.courseRepository = courseRepository;
-    this.courseMapper = courseMapper;
-  }
+  private final CourseRepository courseRepository;
+  private final StudentExamInfoRepository studentExamInfoRepository;
+  private final CourseMapper courseMapper;
 
   @Transactional
   public long createCourse(CreateOrUpdateCourseDto dto) {
@@ -58,6 +56,14 @@ public class CourseCommandExecutor {
     Exam exam = courseMapper.toExam(dto);
 
     course.addExam(exam);
+
+    //시험 생성 -> 모든 승인된 응시자로 StudentExamInfo 생성
+    Set<Student> students = courseRepository.findAllStudentWithCourseId(courseId);
+    for (Student student : students) {
+      if(student.getVerified()){
+        studentExamInfoRepository.save(new StudentExamInfo(student, exam));
+      }
+    }
   }
 
   @Transactional
@@ -114,7 +120,22 @@ public class CourseCommandExecutor {
 
     dto.getStudents().forEach(course::approveStudent);
 
-    // approvedEvent 발생 -> 학생에게 시험장 url 포함된 email 전송
+    Set<Exam> exams = courseRepository.findAllExamWithCourseId(courseId);
+
+    //응시자 승인 -> 모든 치뤄지지 않은 시험에서 StudentExamInfo 생성
+    for (Long studentId : dto.getStudents()) {
+      for (Student student : course.getStudents()) {
+        if(student.getId().equals(studentId)){
+          for (Exam exam : exams) {
+            if(LocalDateTime.now().isBefore(exam.getStartTime().atDate(exam.getExamDate()))){
+              studentExamInfoRepository.save(new StudentExamInfo(student, exam));
+            }
+          }
+        }
+      }
+    }
+
+    //approvedEvent 발생 -> 학생에게 시험장 url 포함된 email 전송
   }
 
   @Transactional
