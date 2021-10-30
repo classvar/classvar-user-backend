@@ -3,6 +3,13 @@ package com.classvar.course.domain;
 import javax.persistence.*;
 
 @Entity
+@Table(
+        uniqueConstraints = {
+                @UniqueConstraint(
+                        columnNames = {"student_id", "exam_id"}
+                )
+        }
+)
 public class StudentExamInfo {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
