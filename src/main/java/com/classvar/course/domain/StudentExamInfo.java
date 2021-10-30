@@ -1,5 +1,8 @@
 package com.classvar.course.domain;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 
 @Entity
@@ -17,10 +20,12 @@ public class StudentExamInfo {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "student_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Student student;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "exam_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Exam exam;
 
     @Enumerated(EnumType.STRING)
