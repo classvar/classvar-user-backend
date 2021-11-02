@@ -20,7 +20,7 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
 
     if (session == null || session.getAttribute(SessionConst.LOGIN_ID) == null) {
       // 로그인 실패
-      return false;
+      return true;
     }
     return true;
   }

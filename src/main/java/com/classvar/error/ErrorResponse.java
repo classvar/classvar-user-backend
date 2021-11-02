@@ -1,5 +1,6 @@
 package com.classvar.error;
 
+import io.swagger.annotations.ApiModel;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,9 +10,11 @@ import org.springframework.validation.FieldError;
 import java.util.ArrayList;
 import java.util.List;
 
+@ApiModel(description = "error")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ErrorResponse {
+
   private List<String> message = new ArrayList<>();
 
   public ErrorResponse(BindingResult bindingResult) {
