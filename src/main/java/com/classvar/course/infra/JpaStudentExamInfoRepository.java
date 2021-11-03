@@ -1,7 +1,7 @@
 package com.classvar.course.infra;
 
-import com.classvar.course.domain.StudentExamInfo;
-import com.classvar.course.domain.StudentExamInfoRepository;
+import com.classvar.exam.domain.StudentExamInfo;
+import com.classvar.exam.domain.StudentExamInfoRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
