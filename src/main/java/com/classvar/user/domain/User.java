@@ -20,8 +20,8 @@ public class User {
   private String name;
   private String department;
 
-  public User(String emil, String password, String name, String department) {
-    this.email = emil;
+  public User(String email, String password, String name, String department) {
+    this.email = email;
     this.password = password;
     this.name = name;
     this.department = department;
