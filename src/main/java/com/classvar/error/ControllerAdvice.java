@@ -1,5 +1,6 @@
 package com.classvar.error;
 
+import com.classvar.error.exception.UnauthenticatedUserException;
 import org.apache.catalina.connector.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,12 @@ public class ControllerAdvice {
 
   @ExceptionHandler(IllegalArgumentException.class)
   public ResponseEntity<Response> IllegalArgumentAdvice(IllegalArgumentException e) {
+    final ErrorResponse response = new ErrorResponse(e.getMessage());
+    return new ResponseEntity(response, HttpStatus.BAD_REQUEST);
+  }
+
+  @ExceptionHandler(UnauthenticatedUserException.class)
+  public ResponseEntity<Response> UnauthenticatedUserAdvice(UnauthenticatedUserException e) {
     final ErrorResponse response = new ErrorResponse(e.getMessage());
     return new ResponseEntity(response, HttpStatus.BAD_REQUEST);
   }
