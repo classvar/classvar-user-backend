@@ -9,4 +9,6 @@ public interface ManagerRepository {
   List<Manager> findAllByCourseId(long courseId);
 
   void deleteAllByIdWithCourseIdInQuery(List<Long> ids, Long courseId);
+
+  List<Object[]> findAllManagerInfoByCourseId(Long courseId);
 }

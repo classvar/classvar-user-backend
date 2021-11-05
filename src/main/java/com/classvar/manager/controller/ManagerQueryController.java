@@ -18,8 +18,8 @@ public class ManagerQueryController {
   private final ManagerQueryProcessor managerQueryProcessor;
 
   @GetMapping(value = "/courses/{courseId}/managers")
-  public ResponseEntity getAllManagerInfo(@PathVariable long courseId) {
-    GetManagerListDto managersInfo = managerQueryProcessor.getManagerList(courseId);
+  public ResponseEntity getManagersInfo(@PathVariable long courseId) {
+    GetManagerListDto managersInfo = managerQueryProcessor.getManagersInfo(courseId);
     return ResponseEntity.status(HttpStatus.OK).body(managersInfo);
   }
 }

@@ -13,4 +13,7 @@ public interface JpaManagerRepository extends JpaRepository<Manager, Long>, Mana
   @Modifying(clearAutomatically = true)
   @Query("DELETE FROM Manager m WHERE m.id IN :ids AND m.courseId = :courseId")
   void deleteAllByIdWithCourseIdInQuery(List<Long> ids, Long courseId);
+
+  @Query("SELECT m, u FROM Manager m JOIN User u ON u.email = m.email WHERE m.courseId = :courseId")
+  List<Object[]> findAllManagerInfoByCourseId(Long courseId);
 }
