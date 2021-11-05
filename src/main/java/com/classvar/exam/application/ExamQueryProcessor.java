@@ -1,6 +1,5 @@
 package com.classvar.exam.application;
 
-
 import com.classvar.exam.application.common.ExamMapper;
 import com.classvar.exam.application.dto.response.GetExamDetailDto;
 import com.classvar.exam.application.dto.response.GetExamInfoDto;
@@ -16,9 +15,8 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ExamQueryProcessor {
 
-  private ExamRepository examRepository;
-  private ExamMapper examMapper;
-
+  private final ExamRepository examRepository;
+  private final ExamMapper examMapper;
 
   public GetExamDetailDto getExamDetailWithId(long courseId, long examId) {
     Exam exam =
@@ -31,7 +29,7 @@ public class ExamQueryProcessor {
 
   public List<GetExamInfoDto> getExamList(long courseId) {
     return examRepository.findExamByCourseId(courseId).stream()
-            .map(exam -> examMapper.toExamInfoDto(exam))
-            .collect(Collectors.toList());
+        .map(exam -> examMapper.toExamInfoDto(exam))
+        .collect(Collectors.toList());
   }
 }
