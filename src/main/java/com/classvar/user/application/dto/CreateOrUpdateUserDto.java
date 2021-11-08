@@ -16,7 +16,7 @@ public class CreateOrUpdateUserDto {
   private String email;
 
   @NotEmpty
-  @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,20}$")
+  @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&+=])(?=\\S+$).{8,20}$")
   private String password;
 
   @NotEmpty(message = "이름은 비어 있을 수 없습니다.")

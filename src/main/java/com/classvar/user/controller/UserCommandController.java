@@ -27,7 +27,7 @@ public class UserCommandController {
   private final UserCommandExecutor userCommandExecutor;
 
   @ApiOperation(value = "회원 가입", notes = "회원 가입을 합니다.", tags = "회원 API")
-  @PostMapping(value = "/signUp")
+  @PostMapping(value = "/signup")
   public ResponseEntity signUp(@Valid @RequestBody CreateOrUpdateUserDto dto) {
     userCommandExecutor.signUp(dto);
     return ResponseEntity.status(HttpStatus.OK).build();
@@ -39,8 +39,10 @@ public class UserCommandController {
 
     Long loginId = userCommandExecutor.login(dto);
 
-    // login fail
-    if (loginId == null) {}
+    // 로그인 실패
+    if (loginId == null) {
+      throw new IllegalArgumentException("아이디 비밀번호가 일치하지 않습니다.");
+    }
 
     HttpSession session = request.getSession();
     session.setAttribute(SessionConst.LOGIN_ID, loginId);

@@ -11,14 +11,14 @@ import java.util.List;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
-
   @Override
   public void addInterceptors(InterceptorRegistry registry) {
     registry
         .addInterceptor(new LoginCheckInterceptor())
         .order(1)
         .addPathPatterns("/**")
-        .excludePathPatterns("/login")
+        .excludePathPatterns("/api/signup")
+        .excludePathPatterns("/api/login")
         .excludePathPatterns("/swagger-ui/**") // 스웨거 쪽은 제외
         .excludePathPatterns("/swagger-resources/**")
         .excludePathPatterns("/webjars/**")
