@@ -2,7 +2,6 @@ package com.classvar.exam.controller;
 
 import com.classvar.exam.application.ExamQueryProcessor;
 import com.classvar.exam.application.dto.response.GetExamDetailDto;
-import com.classvar.exam.application.dto.response.GetExamListDto;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -36,8 +35,15 @@ public class ExamQueryController {
   @GetMapping(value = "/exams")
   public ResponseEntity getAllExamInfo(@RequestParam long courseId) {
 
-    GetExamListDto exams = new GetExamListDto(examQueryProcessor.getExamList(courseId));
+    return ResponseEntity.status(HttpStatus.OK).body(examQueryProcessor.getExamList(courseId));
+  }
 
-    return ResponseEntity.status(HttpStatus.OK).body(exams);
+  @ApiOperation(value = "문제 목록", notes = "해당 시험의 문제 목록을 가져옵니다.", tags = "시험 API")
+  @GetMapping(value = "/exams/{examId}/questions")
+  public ResponseEntity getAllQuestion(
+      @RequestParam long courseId, @PathVariable("examId") long examId) {
+
+    return ResponseEntity.status(HttpStatus.OK)
+        .body(examQueryProcessor.getQuestionList(courseId, examId));
   }
 }

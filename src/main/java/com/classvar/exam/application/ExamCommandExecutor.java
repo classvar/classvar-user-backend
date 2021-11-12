@@ -2,6 +2,7 @@ package com.classvar.exam.application;
 
 import com.classvar.exam.application.common.ExamMapper;
 import com.classvar.exam.application.dto.request.CreateOrUpdateExamDto;
+import com.classvar.exam.application.dto.request.CreateOrUpdateQuestionDto;
 import com.classvar.exam.domain.Exam;
 import com.classvar.exam.domain.ExamRepository;
 import lombok.RequiredArgsConstructor;
@@ -40,5 +41,35 @@ public class ExamCommandExecutor {
             .findExamById(examId)
             .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 시험 입니다."));
     examRepository.delete(exam);
+  }
+
+  @Transactional
+  public void createQuestion(long examId, CreateOrUpdateQuestionDto dto) {
+    Exam exam =
+        examRepository
+            .findExamById(examId)
+            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 시험 입니다."));
+
+    exam.addQuestion(examMapper.toQuestion(dto));
+  }
+
+  @Transactional
+  public void updateQuestion(long examId, long questionId, CreateOrUpdateQuestionDto dto) {
+    Exam exam =
+        examRepository
+            .findExamById(examId)
+            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 시험 입니다."));
+
+    exam.updateQuestion(questionId, examMapper.toQuestion(dto));
+  }
+
+  @Transactional
+  public void deleteQuestion(long examId, long questionId) {
+    Exam exam =
+        examRepository
+            .findExamById(examId)
+            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 시험 입니다."));
+
+    exam.deleteQuestion(questionId);
   }
 }
