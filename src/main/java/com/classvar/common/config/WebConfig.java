@@ -16,13 +16,9 @@ public class WebConfig implements WebMvcConfigurer {
     registry
         .addInterceptor(new LoginCheckInterceptor())
         .order(1)
-        .addPathPatterns("/**")
+        .addPathPatterns("/api")
         .excludePathPatterns("/api/signup")
-        .excludePathPatterns("/api/login")
-        .excludePathPatterns("/swagger-ui/**") // 스웨거 쪽은 제외
-        .excludePathPatterns("/swagger-resources/**")
-        .excludePathPatterns("/webjars/**")
-        .excludePathPatterns("/v2/api-docs");
+        .excludePathPatterns("/api/login");
   }
 
   @Override
