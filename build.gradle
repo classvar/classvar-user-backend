@@ -4,6 +4,12 @@ plugins {
     id 'java'
 }
 
+// *plain.jar에 대한 설명을 참고
+// https://dev-j.tistory.com/22
+jar {
+    enabled=false
+}
+
 group = 'com.classvar'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
