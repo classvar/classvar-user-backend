@@ -10,9 +10,8 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface ExamMapper {
 
-
   @Mapping(target = "numberOfProblem", ignore = true)
-  Exam toExam(Long courseId,CreateOrUpdateExamDto dto);
+  Exam toExam(CreateOrUpdateExamDto dto);
 
   GetExamDetailDto toExamDetailDto(Exam exam);
 

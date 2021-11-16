@@ -21,7 +21,7 @@ public class ExamQueryProcessor {
   public GetExamDetailDto getExamDetailWithId(long courseId, long examId) {
     Exam exam =
         examRepository
-            .findExamWithCourseIdAndExamId(courseId, examId)
+            .findExamByIdAndCourseId(examId, courseId)
             .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 시험 입니다."));
 
     return examMapper.toExamDetailDto(exam);

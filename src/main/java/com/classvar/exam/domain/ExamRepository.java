@@ -8,9 +8,9 @@ public interface ExamRepository {
 
   void delete(Exam toRemove);
 
-  List<Exam> findAll();
+  Optional<Exam> findExamById(Long examId);
+
+  Optional<Exam> findExamByIdAndCourseId(Long examId, Long courseId);
 
   List<Exam> findExamByCourseId(Long courseId);
-
-  Optional<Exam> findExamWithCourseIdAndExamId(Long courseId, Long examId);
 }

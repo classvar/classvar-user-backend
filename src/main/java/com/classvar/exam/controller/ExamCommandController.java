@@ -21,33 +21,29 @@ public class ExamCommandController {
   private final ExamCommandExecutor examCommandExecutor;
 
   @ApiOperation(value = "시험 생성", notes = "시험을 생성합니다.", tags = "시험 API")
-  @PostMapping(value = "/courses/{courseId}/exams")
-  public ResponseEntity createExam(
-      @PathVariable("courseId") long courseId, @Valid @RequestBody CreateOrUpdateExamDto dto) {
+  @PostMapping(value = "/exams")
+  public ResponseEntity createExam(@Valid @RequestBody CreateOrUpdateExamDto dto) {
 
-    examCommandExecutor.createExam(courseId, dto);
+    examCommandExecutor.createExam(dto);
 
     return ResponseEntity.status(HttpStatus.OK).build();
   }
 
   @ApiOperation(value = "시험 수정", notes = "시험을 수정합니다.", tags = "시험 API")
-  @PutMapping(value = "/courses/{courseId}/exams/{examId}")
+  @PutMapping(value = "exams/{examId}")
   public ResponseEntity updateExam(
-      @PathVariable("courseId") long courseId,
-      @PathVariable("examId") long examId,
-      @Valid @RequestBody CreateOrUpdateExamDto dto) {
+      @PathVariable("examId") long examId, @Valid @RequestBody CreateOrUpdateExamDto dto) {
 
-    examCommandExecutor.updateExam(courseId, examId, dto);
+    examCommandExecutor.updateExam(examId, dto);
 
     return ResponseEntity.status(HttpStatus.OK).build();
   }
 
   @ApiOperation(value = "시험 삭제", notes = "시험을 삭제합니다.", tags = "시험 API")
-  @DeleteMapping(value = "/courses/{courseId}/exams/{examId}")
-  public ResponseEntity deleteExam(
-      @PathVariable("courseId") long courseId, @PathVariable("examId") long examId) {
+  @DeleteMapping(value = "/exams/{examId}")
+  public ResponseEntity deleteExam(@PathVariable("examId") long examId) {
 
-    examCommandExecutor.deleteExam(courseId, examId);
+    examCommandExecutor.deleteExam(examId);
 
     return ResponseEntity.status(HttpStatus.OK).build();
   }
