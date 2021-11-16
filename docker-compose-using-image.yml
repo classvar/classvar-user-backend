@@ -1,0 +1,7 @@
+version: '3'
+services:
+  spring_app:
+    image: seongbin9786/classvar_backend
+    ports:
+      # Spring App에선 8080 포트로 열려있기 때문에.
+      - 80:8080
