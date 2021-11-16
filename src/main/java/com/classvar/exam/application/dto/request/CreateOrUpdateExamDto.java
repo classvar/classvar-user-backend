@@ -8,6 +8,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -15,6 +16,9 @@ import java.time.LocalTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CreateOrUpdateExamDto {
+  @Positive(message = "courseId 필드는 양수 여야 합니다.")
+  private long courseId;
+
   @NotEmpty(message = "name 필드는 비어 있을 수 없습니다.")
   private String name;
 

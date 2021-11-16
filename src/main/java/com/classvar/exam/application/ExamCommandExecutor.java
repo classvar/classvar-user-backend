@@ -16,27 +16,29 @@ public class ExamCommandExecutor {
   private final ExamMapper examMapper;
 
   @Transactional
-  public long createExam(long courseId, CreateOrUpdateExamDto dto) {
-    Exam exam = examMapper.toExam(courseId ,dto);
+  public long createExam(CreateOrUpdateExamDto dto) {
+    Exam exam = examMapper.toExam(dto);
 
     examRepository.save(exam);
     return exam.getId();
   }
 
   @Transactional
-  public void updateExam(long courseId, long examId, CreateOrUpdateExamDto dto) {
+  public void updateExam(long examId, CreateOrUpdateExamDto dto) {
     Exam exam =
-        examRepository.findExamWithCourseIdAndExamId(courseId, examId)
+        examRepository
+            .findExamById(examId)
             .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 시험 입니다."));
 
     exam.updateExamInfo(dto.getName(), dto.getExamDate(), dto.getStartTime(), dto.getEndTime());
   }
 
   @Transactional
-  public void deleteExam(long courseId, long examId) {
+  public void deleteExam(long examId) {
     Exam exam =
-            examRepository.findExamWithCourseIdAndExamId(courseId, examId)
-                    .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 시험 입니다."));
+        examRepository
+            .findExamById(examId)
+            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 시험 입니다."));
     examRepository.delete(exam);
   }
 }

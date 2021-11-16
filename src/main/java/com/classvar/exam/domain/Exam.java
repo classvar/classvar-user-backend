@@ -30,9 +30,9 @@ public class Exam {
 
   private Integer numberOfProblem;
 
-
-  public Exam(Long courseId, String name, LocalDate examDate, LocalTime startTime, LocalTime endTime) {
-    this.courseId =courseId;
+  public Exam(
+      Long courseId, String name, LocalDate examDate, LocalTime startTime, LocalTime endTime) {
+    this.courseId = courseId;
     this.name = name;
     this.examDate = examDate;
     this.startTime = startTime;
@@ -40,7 +40,6 @@ public class Exam {
   }
 
   protected Exam() {}
-
 
   public void updateExamInfo(
       String name, LocalDate examDate, LocalTime startTime, LocalTime endTime) {

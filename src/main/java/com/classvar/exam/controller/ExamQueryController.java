@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Api(tags = "시험 API")
 @Controller
@@ -22,9 +23,9 @@ public class ExamQueryController {
   private final ExamQueryProcessor examQueryProcessor;
 
   @ApiOperation(value = "시험 정보", notes = "시험 정보를 가져옵니다.", tags = "시험 API")
-  @GetMapping(value = "/courses/{courseId}/exams/{examId}")
+  @GetMapping(value = "/exams/{examId}")
   public ResponseEntity getExamDetail(
-      @PathVariable("courseId") long courseId, @PathVariable("examId") long examId) {
+      @RequestParam long courseId, @PathVariable("examId") long examId) {
 
     GetExamDetailDto examDetail = examQueryProcessor.getExamDetailWithId(courseId, examId);
 
@@ -32,8 +33,8 @@ public class ExamQueryController {
   }
 
   @ApiOperation(value = "시험 목록", notes = "시험 목록을 가져옵니다.", tags = "시험 API")
-  @GetMapping(value = "/courses/{courseId}/exams")
-  public ResponseEntity getAllExamInfo(@PathVariable("courseId") long courseId) {
+  @GetMapping(value = "/exams")
+  public ResponseEntity getAllExamInfo(@RequestParam long courseId) {
 
     GetExamListDto exams = new GetExamListDto(examQueryProcessor.getExamList(courseId));
 
