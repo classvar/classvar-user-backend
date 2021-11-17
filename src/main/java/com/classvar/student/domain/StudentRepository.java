@@ -8,9 +8,11 @@ public interface StudentRepository {
 
   void delete(Student student);
 
+  void deleteByIdIn(List<Long> studentIds);
+
   Optional<Student> findByUuid(String uuid);
 
-  List<Student> findAllStudentWithCourseId(Long courseId);
+  List<Student> findStudentByCourseId(Long courseId);
 
-  List<Student> findStudentWithIds(List<Long> studentIds);
+  List<Student> findStudentByIdIn(List<Long> studentIds);
 }
