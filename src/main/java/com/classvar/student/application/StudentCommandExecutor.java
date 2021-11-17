@@ -18,14 +18,14 @@ public class StudentCommandExecutor {
   private final StudentMapper studentMapper;
 
   @Transactional
-  public void createStudents(long courseId, CreateStudentsDto dto) {
+  public void createStudents(CreateStudentsDto dto) {
     studentMapper.toStudents(dto).forEach(studentRepository::save);
 
     // createdEvent 발생 -> 학생에게 등록하는 url 포함된 email 전송
   }
 
   @Transactional
-  public void updateStudent(long courseId, String uuid, UpdateStudentInfoDto dto) {
+  public void updateStudent(String uuid, UpdateStudentInfoDto dto) {
 
     Student student = studentRepository.findByUuid(uuid).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 응시자 입니다."));
 
@@ -35,17 +35,12 @@ public class StudentCommandExecutor {
 
 
   @Transactional
-  public void approveStudent(long courseId, VerifyOrDeleteStudentsDto dto) {
-
-    //"select student s from student where sid in list"
-    studentRepository.findStudentWithIds(dto.getStudents()).forEach(Student::verify);
-
-    //응시자 승인 -> 모든 치뤄지지 않은 시험에서 StudentExamInfo 생성
-
+  public void approveStudent(VerifyOrDeleteStudentsDto dto) {
+    studentRepository.findStudentByIdIn(dto.getStudentIds()).forEach(Student::verified);
   }
 
   @Transactional
-  public void deleteStudent(long courseId, VerifyOrDeleteStudentsDto dto) {
-    studentRepository.findStudentWithIds(dto.getStudents()).forEach(studentRepository::delete);
+  public void deleteStudent(VerifyOrDeleteStudentsDto dto) {
+    studentRepository.deleteByIdIn(dto.getStudentIds());
   }
 }
