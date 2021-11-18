@@ -29,7 +29,8 @@ public class Student {
 
   protected Student() {}
 
-  public Student(String email) {
+  public Student(Long courseId, String email) {
+    this.courseId = courseId;
     this.email = email;
     this.uuid = UUID.randomUUID().toString();
     this.verified = false;
@@ -43,7 +44,7 @@ public class Student {
   }
 
 
-  public void verify() {
+  public void verified() {
     verified = true;
   }
 

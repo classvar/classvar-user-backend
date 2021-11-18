@@ -1,6 +1,5 @@
 package com.classvar.student.application;
 
-import com.classvar.course.application.common.CourseMapper;
 import com.classvar.student.application.common.StudentMapper;
 import com.classvar.student.application.dto.response.GetStudentDto;
 import com.classvar.student.application.dto.response.GetStudentListDto;
@@ -17,12 +16,11 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class StudentQueryProcessor {
 
-  private final CourseMapper courseMapper;
   private final StudentMapper studentMapper;
   private final StudentRepository studentRepository;
 
   public GetStudentListDto getStudentList(long courseId) {
-    List<GetStudentDto> students = studentRepository.findAllStudentWithCourseId(courseId).stream()
+    List<GetStudentDto> students = studentRepository.findStudentByCourseId(courseId).stream()
             .map(studentMapper::toStudentInfoDto)
             .collect(Collectors.toList());
 

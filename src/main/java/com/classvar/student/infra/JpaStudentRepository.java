@@ -11,9 +11,4 @@ import java.util.List;
 
 @Repository
 public interface JpaStudentRepository extends JpaRepository<Student, Long>, StudentRepository {
-  @Query("select s from Student s where s.courseId =:courseId")
-  List<Student> findAllStudentWithCourseId(@Param("courseId") Long courseId);
-
-  @Query("select s from Student s where s.id in :studentIds")
-  List<Student> findStudentWithIds(@Param("studentIds") List<Long> studentIds);
 }

@@ -11,5 +11,5 @@ import java.util.List;
 @AllArgsConstructor
 public class VerifyOrDeleteStudentsDto {
     //collection validation 추가하겠습니다.
-    List<Long> students;
+    private List<Long> studentIds;
 }

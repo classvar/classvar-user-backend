@@ -23,43 +23,39 @@ public class StudentCommandController {
   private final StudentCommandExecutor studentCommandExecutor;
 
   @ApiOperation(value = "응시자 생성", notes = "응시자를 생성합니다.", tags = "응시자 API")
-  @PostMapping(value = "/courses/{courseId}/students")
-  public ResponseEntity createStudent(
-      @PathVariable("courseId") long courseId, @Valid @RequestBody CreateStudentsDto dto) {
+  @PostMapping(value = "/students")
+  public ResponseEntity createStudent(@Valid @RequestBody CreateStudentsDto dto) {
 
-    studentCommandExecutor.createStudents(courseId, dto);
+    studentCommandExecutor.createStudents(dto);
 
     return ResponseEntity.status(HttpStatus.OK).build();
   }
 
   @ApiOperation(value = "응시자 정보 등록", notes = "응시자 정보를 등록합니다.", tags = "응시자 API")
-  @PutMapping(value = "courses/{courseId}/students/registry/{uuid}")
+  @PutMapping(value = "/students/registry/{uuid}")
   public ResponseEntity registerStudent(
-      @PathVariable("courseId") long courseId,
       @PathVariable("uuid") String uuid,
       @Valid @RequestBody UpdateStudentInfoDto dto) {
 
-    studentCommandExecutor.updateStudent(courseId, uuid, dto);
+    studentCommandExecutor.updateStudent(uuid, dto);
 
     return ResponseEntity.status(HttpStatus.OK).build();
   }
 
   @ApiOperation(value = "응시자 승인", notes = "응시자를 승인합니다.", tags = "응시자 API")
-  @PostMapping(value = "courses/{courseId}/students/verify")
-  public ResponseEntity approveStudents(
-      @PathVariable("courseId") long courseId, @Valid @RequestBody VerifyOrDeleteStudentsDto dto) {
+  @PostMapping(value = "/students/verify")
+  public ResponseEntity approveStudents(@Valid @RequestBody VerifyOrDeleteStudentsDto dto) {
 
-    studentCommandExecutor.approveStudent(courseId, dto);
+    studentCommandExecutor.approveStudent(dto);
 
     return ResponseEntity.status(HttpStatus.OK).build();
   }
 
   @ApiOperation(value = "응시자 삭제", notes = "응시자를 삭제합니다.", tags = "응시자 API")
-  @PostMapping(value = "/courses/{courseId}/students/delete")
-  public ResponseEntity deleteStudents(
-      @PathVariable("courseId") long courseId, @Valid @RequestBody VerifyOrDeleteStudentsDto dto) {
+  @PostMapping(value = "/students/delete")
+  public ResponseEntity deleteStudents(@Valid @RequestBody VerifyOrDeleteStudentsDto dto) {
 
-    studentCommandExecutor.deleteStudent(courseId, dto);
+    studentCommandExecutor.deleteStudent(dto);
 
     return ResponseEntity.status(HttpStatus.OK).build();
   }
