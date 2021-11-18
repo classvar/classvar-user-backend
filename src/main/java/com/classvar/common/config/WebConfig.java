@@ -4,6 +4,7 @@ import com.classvar.common.argumentresolver.LoginUserArgumentResolver;
 import com.classvar.common.interceptor.LoginCheckInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -19,6 +20,11 @@ public class WebConfig implements WebMvcConfigurer {
         .addPathPatterns("/api")
         .excludePathPatterns("/api/signup")
         .excludePathPatterns("/api/login");
+  }
+
+  @Override
+  public void addCorsMappings(CorsRegistry registry) {
+    registry.addMapping("/**").allowedOrigins("http://localhost:3000", "https://classvar.com");
   }
 
   @Override
