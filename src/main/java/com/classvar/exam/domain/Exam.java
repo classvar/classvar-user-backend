@@ -2,13 +2,12 @@ package com.classvar.exam.domain;
 
 import lombok.Getter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Getter
 @Entity
@@ -30,6 +29,9 @@ public class Exam {
 
   private Integer numberOfProblem;
 
+  @OneToMany(mappedBy = "exam", cascade = CascadeType.ALL, orphanRemoval = true)
+  private Set<Question> questions = new HashSet<>();
+
   public Exam(
       Long courseId, String name, LocalDate examDate, LocalTime startTime, LocalTime endTime) {
     this.courseId = courseId;
@@ -47,6 +49,27 @@ public class Exam {
     this.examDate = examDate;
     this.startTime = startTime;
     this.endTime = endTime;
+  }
+
+  public void addQuestion(Question question) {
+    question.setExam(this);
+    this.questions.add(question);
+  }
+
+  public void updateQuestion(Long questionId, Question updatePayload) {
+    for (Question question : this.questions) {
+      if (question.getId() == questionId) {
+        question.updateQuestionInfo(updatePayload);
+        return;
+      }
+    }
+    throw new IllegalArgumentException("존재하지 않는 문제 입니다.");
+  }
+
+  public void deleteQuestion(Long idToDelete) {
+    if (!this.questions.removeIf(question -> question.getId() == idToDelete)) {
+      throw new IllegalArgumentException("존재하지 않는 문제 입니다.");
+    }
   }
 
   @Override

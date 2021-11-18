@@ -3,8 +3,10 @@ package com.classvar.exam.application;
 import com.classvar.exam.application.common.ExamMapper;
 import com.classvar.exam.application.dto.response.GetExamDetailDto;
 import com.classvar.exam.application.dto.response.GetExamInfoDto;
+import com.classvar.exam.application.dto.response.GetQuestionDto;
 import com.classvar.exam.domain.Exam;
 import com.classvar.exam.domain.ExamRepository;
+import com.classvar.exam.domain.QuestionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,7 @@ import java.util.stream.Collectors;
 public class ExamQueryProcessor {
 
   private final ExamRepository examRepository;
+  private final QuestionRepository questionRepository;
   private final ExamMapper examMapper;
 
   public GetExamDetailDto getExamDetailWithId(long courseId, long examId) {
@@ -29,7 +32,13 @@ public class ExamQueryProcessor {
 
   public List<GetExamInfoDto> getExamList(long courseId) {
     return examRepository.findExamByCourseId(courseId).stream()
-        .map(exam -> examMapper.toExamInfoDto(exam))
+        .map(examMapper::toExamInfoDto)
+        .collect(Collectors.toList());
+  }
+
+  public List<GetQuestionDto> getQuestionList(long courseId, long examId) {
+    return questionRepository.findQuestionWithCourseIdAndExamId(courseId, examId).stream()
+        .map(examMapper::toQuestionDto)
         .collect(Collectors.toList());
   }
 }
