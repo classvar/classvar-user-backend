@@ -2,8 +2,9 @@ package com.classvar.manager.controller;
 
 import com.classvar.manager.application.ManagerCommandExecutor;
 import com.classvar.manager.application.dto.request.CreateManagerDto;
+import com.classvar.manager.application.dto.request.DeleteManagerDto;
 import com.classvar.manager.application.dto.request.UpdateManagerInfoDto;
-import com.classvar.manager.application.dto.request.VerifyOrDeleteManagerDto;
+import com.classvar.manager.application.dto.request.VerifyManagerDto;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -41,7 +42,7 @@ public class ManagerCommandController {
 
   @ApiOperation(value = "감독관 승인", notes = "감독관을 승인합니다.", tags = "감독관 API")
   @PostMapping(value = "/managers/verify")
-  public ResponseEntity approveManagers(@Valid @RequestBody VerifyOrDeleteManagerDto dto) {
+  public ResponseEntity approveManagers(@Valid @RequestBody VerifyManagerDto dto) {
 
     managerCommandExecutor.approveManager(dto);
 
@@ -51,7 +52,7 @@ public class ManagerCommandController {
   //다수의 감독관을 지우기 위해 delete 동사를 덧붙여 Post 형태로 받음.
   @ApiOperation(value = "감독관 삭제", notes = "괌독관을 삭제합니다.", tags = "감독관 API")
   @PostMapping(value = "managers/delete")
-  public ResponseEntity deleteManagers(@RequestBody @Valid VerifyOrDeleteManagerDto dto) {
+  public ResponseEntity deleteManagers(@RequestBody @Valid DeleteManagerDto dto) {
     managerCommandExecutor.deleteManager(dto);
     return ResponseEntity.status(HttpStatus.OK).build();
   }

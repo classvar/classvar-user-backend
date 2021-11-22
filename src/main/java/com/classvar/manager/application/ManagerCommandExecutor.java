@@ -2,8 +2,9 @@ package com.classvar.manager.application;
 
 import com.classvar.manager.application.common.ManagerMapper;
 import com.classvar.manager.application.dto.request.CreateManagerDto;
+import com.classvar.manager.application.dto.request.DeleteManagerDto;
 import com.classvar.manager.application.dto.request.UpdateManagerInfoDto;
-import com.classvar.manager.application.dto.request.VerifyOrDeleteManagerDto;
+import com.classvar.manager.application.dto.request.VerifyManagerDto;
 import com.classvar.manager.domain.Manager;
 import com.classvar.manager.domain.ManagerRepository;
 import lombok.RequiredArgsConstructor;
@@ -31,12 +32,12 @@ public class ManagerCommandExecutor {
   }
 
   @Transactional
-  public void approveManager(VerifyOrDeleteManagerDto dto) {
+  public void approveManager(VerifyManagerDto dto) {
     managerRepository.findManagerByIdIn(dto.getManagerIds()).forEach(Manager::verified);
   }
 
   @Transactional
-  public void deleteManager(VerifyOrDeleteManagerDto dto) {
+  public void deleteManager(DeleteManagerDto dto) {
     managerRepository.deleteByIdIn(dto.getManagerIds());
   }
 
