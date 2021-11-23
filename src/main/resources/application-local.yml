@@ -16,6 +16,17 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: create-drop
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: classvarmail@gmail.com
+    password: slnbrikfkgidixdw
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable : true
 decorator:
   datasource:
     p6spy.enable-logging: true
