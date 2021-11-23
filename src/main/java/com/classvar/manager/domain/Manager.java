@@ -41,7 +41,7 @@ public class Manager {
     this.email = email;
   }
 
-  public void verified(){
+  public void setApproved(){
     this.verified = true;
   }
 

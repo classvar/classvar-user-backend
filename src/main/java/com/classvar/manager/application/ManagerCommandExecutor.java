@@ -33,7 +33,7 @@ public class ManagerCommandExecutor {
 
   @Transactional
   public void approveManager(VerifyManagerDto dto) {
-    managerRepository.findManagerByIdIn(dto.getManagerIds()).forEach(Manager::verified);
+    managerRepository.findManagerByIdIn(dto.getManagerIds()).forEach(Manager::setApproved);
   }
 
   @Transactional
