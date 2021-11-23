@@ -9,6 +9,6 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class VerifyManagerDto {
+public class ApproveManagerDto {
     private List<Long> managerIds;
 }

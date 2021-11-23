@@ -21,7 +21,7 @@ public class Manager {
   private String email;
   private String managerId;
   private Long courseId;
-  private Boolean verified;
+  private Boolean approved;
 
   private String uuid;
 
@@ -32,7 +32,7 @@ public class Manager {
     this.email = email;
     this.courseId = courseId;
     this.uuid = UUID.randomUUID().toString();
-    this.verified = false;
+    this.approved = false;
   }
 
   public void updateManagerInfo(String name, String managerId, String email) {
@@ -42,7 +42,7 @@ public class Manager {
   }
 
   public void setApproved(){
-    this.verified = true;
+    this.approved = true;
   }
 
   @Override

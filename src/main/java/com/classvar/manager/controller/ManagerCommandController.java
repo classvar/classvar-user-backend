@@ -1,10 +1,10 @@
 package com.classvar.manager.controller;
 
 import com.classvar.manager.application.ManagerCommandExecutor;
+import com.classvar.manager.application.dto.request.ApproveManagerDto;
 import com.classvar.manager.application.dto.request.CreateManagerDto;
 import com.classvar.manager.application.dto.request.DeleteManagerDto;
 import com.classvar.manager.application.dto.request.UpdateManagerInfoDto;
-import com.classvar.manager.application.dto.request.VerifyManagerDto;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -42,7 +42,7 @@ public class ManagerCommandController {
 
   @ApiOperation(value = "감독관 승인", notes = "감독관을 승인합니다.", tags = "감독관 API")
   @PostMapping(value = "/managers/verify")
-  public ResponseEntity approveManagers(@Valid @RequestBody VerifyManagerDto dto) {
+  public ResponseEntity approveManagers(@Valid @RequestBody ApproveManagerDto dto) {
 
     managerCommandExecutor.approveManager(dto);
 
