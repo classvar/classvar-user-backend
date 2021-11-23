@@ -1,4 +1,4 @@
-package com.classvar.user.application.dto;
+package com.classvar.admin.application.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

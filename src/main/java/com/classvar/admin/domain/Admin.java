@@ -1,4 +1,4 @@
-package com.classvar.user.domain;
+package com.classvar.admin.domain;
 
 import lombok.Getter;
 
@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 @Entity
 @Getter
-public class User {
+public class Admin {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,12 +20,12 @@ public class User {
   private String name;
   private String department;
 
-  public User(String email, String password, String name, String department) {
+  public Admin(String email, String password, String name, String department) {
     this.email = email;
     this.password = password;
     this.name = name;
     this.department = department;
   }
 
-  protected User() {}
+  protected Admin() {}
 }
