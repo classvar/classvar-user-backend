@@ -36,8 +36,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-mail'
 
     annotationProcessor "org.projectlombok:lombok-mapstruct-binding:0.2.0"
-    annotationProcessor 'org.mapstruc' +
-            't:mapstruct-processor:1.4.2.Final'
+    annotationProcessor 'org.mapstruct:mapstruct-processor:1.4.2.Final'
     annotationProcessor 'org.projectlombok:lombok'
 
     runtimeOnly 'com.h2database:h2'

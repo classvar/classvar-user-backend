@@ -11,12 +11,12 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @RequiredArgsConstructor
-public class JavaMailSenderMailService implements MailService{
+public class SpringMailService implements MailService{
 
     private final JavaMailSender mailSender;
 
     @Override
-    public void sendMail(MailForm mailForm) {
+    public void sendMail(SimpleMailForm mailForm) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(mailForm.getToAddress());
         message.setFrom(mailForm.getFromAddress());
