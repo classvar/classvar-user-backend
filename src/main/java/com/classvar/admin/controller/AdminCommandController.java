@@ -1,9 +1,9 @@
-package com.classvar.user.controller;
+package com.classvar.admin.controller;
 
+import com.classvar.admin.application.AdminCommandExecutor;
+import com.classvar.admin.application.dto.CreateOrUpdateAdminDto;
+import com.classvar.admin.application.dto.LoginDto;
 import com.classvar.common.SessionConst;
-import com.classvar.user.application.UserCommandExecutor;
-import com.classvar.user.application.dto.CreateOrUpdateUserDto;
-import com.classvar.user.application.dto.LoginDto;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -22,14 +22,14 @@ import javax.validation.Valid;
 @Controller
 @RequestMapping("/api")
 @RequiredArgsConstructor
-public class UserCommandController {
+public class AdminCommandController {
 
-  private final UserCommandExecutor userCommandExecutor;
+  private final AdminCommandExecutor adminCommandExecutor;
 
   @ApiOperation(value = "회원 가입", notes = "회원 가입을 합니다.", tags = "회원 API")
   @PostMapping(value = "/signup")
-  public ResponseEntity signUp(@Valid @RequestBody CreateOrUpdateUserDto dto) {
-    userCommandExecutor.signUp(dto);
+  public ResponseEntity signUp(@Valid @RequestBody CreateOrUpdateAdminDto dto) {
+    adminCommandExecutor.signUp(dto);
     return ResponseEntity.status(HttpStatus.OK).build();
   }
 
@@ -37,7 +37,7 @@ public class UserCommandController {
   @PostMapping(value = "/login")
   public ResponseEntity login(@Valid @RequestBody LoginDto dto, HttpServletRequest request) {
 
-    Long loginId = userCommandExecutor.login(dto);
+    Long loginId = adminCommandExecutor.login(dto);
 
     // 로그인 실패
     if (loginId == null) {
