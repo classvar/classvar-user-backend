@@ -2,8 +2,9 @@ package com.classvar.student.controller;
 
 import com.classvar.student.application.StudentCommandExecutor;
 import com.classvar.student.application.dto.request.CreateStudentsDto;
+import com.classvar.student.application.dto.request.DeleteStudentsDto;
 import com.classvar.student.application.dto.request.UpdateStudentInfoDto;
-import com.classvar.student.application.dto.request.VerifyOrDeleteStudentsDto;
+import com.classvar.student.application.dto.request.ApproveStudentsDto;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -44,7 +45,7 @@ public class StudentCommandController {
 
   @ApiOperation(value = "응시자 승인", notes = "응시자를 승인합니다.", tags = "응시자 API")
   @PostMapping(value = "/students/verify")
-  public ResponseEntity approveStudents(@Valid @RequestBody VerifyOrDeleteStudentsDto dto) {
+  public ResponseEntity approveStudents(@Valid @RequestBody ApproveStudentsDto dto) {
 
     studentCommandExecutor.approveStudent(dto);
 
@@ -53,7 +54,7 @@ public class StudentCommandController {
 
   @ApiOperation(value = "응시자 삭제", notes = "응시자를 삭제합니다.", tags = "응시자 API")
   @PostMapping(value = "/students/delete")
-  public ResponseEntity deleteStudents(@Valid @RequestBody VerifyOrDeleteStudentsDto dto) {
+  public ResponseEntity deleteStudents(@Valid @RequestBody DeleteStudentsDto dto) {
 
     studentCommandExecutor.deleteStudent(dto);
 
