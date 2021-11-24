@@ -27,10 +27,13 @@ public class Exam {
 
   private LocalTime endTime;
 
-  private Integer numberOfProblem;
+  private Integer numberOfQuestions;
 
   @OneToMany(mappedBy = "exam", cascade = CascadeType.ALL, orphanRemoval = true)
   private Set<Question> questions = new HashSet<>();
+
+  @OneToMany(mappedBy = "exam", cascade = CascadeType.ALL, orphanRemoval = true)
+  private Set<StudentExamInfo> studentExamInfos = new HashSet<>();
 
   public Exam(
       Long courseId, String name, LocalDate examDate, LocalTime startTime, LocalTime endTime) {
