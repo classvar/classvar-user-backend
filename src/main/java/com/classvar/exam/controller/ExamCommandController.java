@@ -1,8 +1,11 @@
 package com.classvar.exam.controller;
 
+import com.classvar.common.SessionConst;
 import com.classvar.exam.application.ExamCommandExecutor;
 import com.classvar.exam.application.dto.request.CreateOrUpdateExamDto;
 import com.classvar.exam.application.dto.request.CreateOrUpdateQuestionDto;
+import com.classvar.student.application.StudentQueryProcessor;
+import com.classvar.student.domain.Student;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 @Api(tags = "시험 API")
@@ -20,6 +25,7 @@ import javax.validation.Valid;
 public class ExamCommandController {
 
   private final ExamCommandExecutor examCommandExecutor;
+  private final StudentQueryProcessor studentQueryProcessor;
 
   @ApiOperation(value = "시험 생성", notes = "시험을 생성합니다.", tags = "시험 API")
   @PostMapping(value = "/exams")
@@ -77,6 +83,23 @@ public class ExamCommandController {
       @PathVariable("examId") Long examId, @PathVariable("questionId") Long questionId) {
 
     examCommandExecutor.deleteQuestion(examId, questionId);
+
+    return ResponseEntity.status(HttpStatus.OK).build();
+  }
+
+  @ApiOperation(value = "응시자 시험 입장", notes = "응시자가 시험에 입장합니다.", tags = "시험 API")
+  @PostMapping(value = "/exams/{examId}/students/{uuid}/join")
+  public ResponseEntity joinExam(
+      @PathVariable("examId") Long examId,
+      @PathVariable("uuid") String uuid,
+      HttpServletRequest request) {
+
+    Student student = studentQueryProcessor.getApprovedStudent(uuid);
+
+    HttpSession session = request.getSession();
+    session.setAttribute(SessionConst.STUDENT, student);
+
+    // TODO 응시자가 시험장에 입장하였을 경우 StudentExamInfo를 만들어 exam에 넣어준다.
 
     return ResponseEntity.status(HttpStatus.OK).build();
   }
