@@ -9,7 +9,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class VerifyOrDeleteStudentsDto {
+public class ApproveStudentsDto {
     //collection validation 추가하겠습니다.
     private List<Long> studentIds;
 }

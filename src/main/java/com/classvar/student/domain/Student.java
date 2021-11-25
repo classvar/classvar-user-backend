@@ -21,7 +21,7 @@ public class Student {
   private String department;
   private String studentId;
   private String email;
-  private Boolean verified;
+  private Boolean approved;
 
   private String uuid;
 
@@ -33,7 +33,7 @@ public class Student {
     this.courseId = courseId;
     this.email = email;
     this.uuid = UUID.randomUUID().toString();
-    this.verified = false;
+    this.approved = false;
   }
 
   public void updateStudentInfo(String name, String department, String studentId, String email) {
@@ -44,8 +44,8 @@ public class Student {
   }
 
 
-  public void verified() {
-    verified = true;
+  public void setApproved() {
+    this.approved = true;
   }
 
   @Override

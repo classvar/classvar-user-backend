@@ -2,8 +2,9 @@ package com.classvar.student.application;
 
 import com.classvar.student.application.common.StudentMapper;
 import com.classvar.student.application.dto.request.CreateStudentsDto;
+import com.classvar.student.application.dto.request.DeleteStudentsDto;
 import com.classvar.student.application.dto.request.UpdateStudentInfoDto;
-import com.classvar.student.application.dto.request.VerifyOrDeleteStudentsDto;
+import com.classvar.student.application.dto.request.ApproveStudentsDto;
 import com.classvar.student.domain.Student;
 import com.classvar.student.domain.StudentRepository;
 import lombok.RequiredArgsConstructor;
@@ -35,12 +36,12 @@ public class StudentCommandExecutor {
 
 
   @Transactional
-  public void approveStudent(VerifyOrDeleteStudentsDto dto) {
-    studentRepository.findStudentByIdIn(dto.getStudentIds()).forEach(Student::verified);
+  public void approveStudent(ApproveStudentsDto dto) {
+    studentRepository.findStudentByIdIn(dto.getStudentIds()).forEach(Student::setApproved);
   }
 
   @Transactional
-  public void deleteStudent(VerifyOrDeleteStudentsDto dto) {
+  public void deleteStudent(DeleteStudentsDto dto) {
     studentRepository.deleteByIdIn(dto.getStudentIds());
   }
 }
