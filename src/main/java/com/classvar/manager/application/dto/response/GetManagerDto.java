@@ -13,7 +13,7 @@ public class GetManagerDto {
 
   private long id;
   private String name;
-  private String department;
   private String managerId;
   private String email;
+  private Boolean verified;
 }

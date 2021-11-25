@@ -1,14 +1,19 @@
 package com.classvar.manager.domain;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ManagerRepository {
 
   Manager save(Manager manager);
 
-  List<Manager> findAllByCourseId(long courseId);
+  void delete(Manager manager);
 
-  void deleteAllByIdWithCourseIdInQuery(List<Long> ids, Long courseId);
+  void deleteByIdIn(List<Long> managerIds);
 
-  List<Object[]> findAllManagerInfoByCourseId(Long courseId);
+  Optional<Manager> findByUuid(String uuid);
+
+  List<Manager> findManagerByCourseId(Long courseId);
+
+  List<Manager> findManagerByIdIn(List<Long> managerIds);
 }
