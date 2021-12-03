@@ -2,6 +2,7 @@ package com.classvar.common.interceptor;
 
 import com.classvar.common.SessionConst;
 import com.classvar.error.exception.UnauthenticatedUserException;
+import org.springframework.http.HttpMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,7 +14,9 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
   @Override
   public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
       throws Exception {
-
+    if (HttpMethod.OPTIONS.matches(request.getMethod())) {
+      return true;
+    }
     HttpSession session = request.getSession();
 
     // 미인증 사용자 요청
