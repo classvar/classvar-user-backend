@@ -32,3 +32,11 @@ Commit Message는 항상 아래 prefix로 시작합니다.
 | test     | 단순히 테스트를 추가하는 게 아니라, 이전에 못 했던 테스트를 추가합니다. |
 | style    | 잘못된 코드 포메팅을 고치거나 새로운 코드 포메팅을 시도합니다. |
 | chore    | 빌드 프로세스 등의 코드 외적인 변경을 의미합니다.            |
+
+### How to build an image
+
+```bash
+$ export TERM=cygwin # windows git bash에서만 사용
+$ ./gradlew bootBuildImage --imageName={your_image_name}
+```
+

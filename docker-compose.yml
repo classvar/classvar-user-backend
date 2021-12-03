@@ -1,9 +1,9 @@
 version: '3'
 services:
   spring_app:
-    build:
-      context: .
-      dockerfile: .
+    image: seongbin9786/classvar_backend
+    environment:
+      - SPRING_PROFILES_ACTIVE=local # 지금은 prod 세팅이 없음
     ports:
       # Spring App에선 8080 포트로 열려있기 때문에.
       - 80:8080
