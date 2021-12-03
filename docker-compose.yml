@@ -4,6 +4,8 @@ services:
     image: seongbin9786/classvar_backend
     environment:
       - SPRING_PROFILES_ACTIVE=local # 지금은 prod 세팅이 없음
+      - JAVA_OPTS="-XX:ReservedCodeCacheSize=100M" # 1GB limit인 EC2에서 실행이 안 돼서 추가함
+      # 최초 로딩 종료 시 440MB, 기본 Ubuntu 사용량 220MB, 실제 사용 시 어떻게 될진 모르겠음. 모니터링 필요
     ports:
       # Spring App에선 8080 포트로 열려있기 때문에.
       - 80:8080
