@@ -13,7 +13,7 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface ExamMapper {
 
-  @Mapping(target = "numberOfProblem", ignore = true)
+  @Mapping(target = "numberOfQuestions", ignore = true)
   Exam toExam(CreateOrUpdateExamDto dto);
 
   GetExamDetailDto toExamDetailDto(Exam exam);
