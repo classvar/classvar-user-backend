@@ -14,14 +14,14 @@ import javax.validation.Valid;
 
 @Api(tags = "코스 API")
 @Controller
-@RequestMapping("/api")
+@RequestMapping("/courses")
 @RequiredArgsConstructor
 public class CourseCommandController {
 
   private final CourseCommandExecutor courseCommandExecutor;
 
   @ApiOperation(value = "코스 생성", notes = "코스를 생성합니다.", tags = "코스 API")
-  @PostMapping(value = "/courses")
+  @PostMapping
   public ResponseEntity createCourse(@Valid @RequestBody CreateOrUpdateCourseDto dto) {
 
     courseCommandExecutor.createCourse(dto);
@@ -30,7 +30,7 @@ public class CourseCommandController {
   }
 
   @ApiOperation(value = "코스 수정", notes = "코스를 수정합니다.", tags = "코스 API")
-  @PutMapping(value = "/courses/{courseId}")
+  @PutMapping(value = "/{courseId}")
   public ResponseEntity updateCourse(
       @PathVariable("courseId") long courseId, @Valid @RequestBody CreateOrUpdateCourseDto dto) {
 
@@ -40,7 +40,7 @@ public class CourseCommandController {
   }
 
   @ApiOperation(value = "코스 삭제", notes = "코스를 삭제합니다.", tags = "코스 API")
-  @DeleteMapping(value = "/courses/{courseId}")
+  @DeleteMapping(value = "/{courseId}")
   public ResponseEntity deleteCourse(@PathVariable("courseId") long courseId) {
 
     courseCommandExecutor.deleteCourse(courseId);

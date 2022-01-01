@@ -14,14 +14,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Api(tags = "감독관 API")
 @RestController
+@RequestMapping("/managers")
 @RequiredArgsConstructor
-@RequestMapping("/api")
 public class ManagerQueryController {
 
   private final ManagerQueryProcessor managerQueryProcessor;
 
   @ApiOperation(value = "감독관 목록", notes = "감독관 목록을 가져옵니다.", tags = "감독관 API")
-  @GetMapping(value = "/managers")
+  @GetMapping
   public ResponseEntity getManagersInfo(@RequestParam long courseId) {
     GetManagerListDto managersInfo = managerQueryProcessor.getManagerList(courseId);
     return ResponseEntity.status(HttpStatus.OK).body(managersInfo);

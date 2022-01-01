@@ -14,14 +14,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Api(tags = "응시자 API")
 @Controller
-@RequestMapping("/api")
+@RequestMapping("/students")
 @RequiredArgsConstructor
 public class StudentQueryController {
 
   private final StudentQueryProcessor studentQueryProcessor;
 
   @ApiOperation(value = "응시자 목록", notes = "응시자 목록을 가져옵니다.", tags = "응시자 API")
-  @GetMapping(value = "/students")
+  @GetMapping
   public ResponseEntity getAllStudentInfo(@RequestParam long courseId) {
     GetStudentListDto students = studentQueryProcessor.getStudentList(courseId);
 

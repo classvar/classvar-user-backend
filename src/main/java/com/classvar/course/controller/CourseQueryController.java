@@ -13,14 +13,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Api(tags = "코스 API")
 @Controller
-@RequestMapping("/api")
+@RequestMapping("/courses")
 @RequiredArgsConstructor
 public class CourseQueryController {
 
   private final CourseQueryProcessor courseQueryProcessor;
 
   @ApiOperation(value = "코스 목록", notes = "코스 목록을 가져옵니다.", tags = "코스 API")
-  @GetMapping(value = "/courses")
+  @GetMapping
   public ResponseEntity getCourseAll() {
 
     GetCourseListDto courses = new GetCourseListDto(courseQueryProcessor.getCourseList());
