@@ -1,0 +1,29 @@
+spring:
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  datasource:
+    url: jdbc:h2:~/test
+    driverClassName: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: classvarmail@gmail.com
+    password: slnbrikfkgidixdw
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable : true
+decorator:
+  datasource:
+    p6spy.enable-logging: true
