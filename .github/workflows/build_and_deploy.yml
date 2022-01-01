@@ -31,17 +31,23 @@ jobs:
           username: seongbin9786
           password: ${{ secrets.DOCKER_HUB_PRIVATE_KEY }}
 
-      # Runs a single command using the runners shell
-      - name: Docker Build Image
+      # SSL 인증서를 classpath 내에 위치시킨다.
+      - name: Copy SSL Certificate
+        run: echo "${{ secrets.SSL_PKCS12 }}" | base64 --decode > ./src/main/resources/SSL_CERTIFICATE.p12
+
+      # 이렇게 빌드된 경우 인증서가 포함되므로 외부에 공개할 수 없다.
+      # 따라서 private repo로 전환하고, Image pull 시에 login을 수행하도록 한다.
+      # DockerHub 로그인은 (아이디, 토큰)으로도 가능하다.
+      # https://docs.docker.com/docker-hub/access-tokens/ 참고
+      - name: Build Docker Image
         run: |
           chmod +x ./gradlew
           ./gradlew bootBuildImage --imageName=seongbin9786/classvar_backend
 
-      # Runs a set of commands using the runners shell
-      - name: Docker Push Image
+      - name: Push Docker Image
         run: docker push seongbin9786/classvar_backend
 
-      - name: Login to EC2 and execute commands
+      - name: Shutdown old compose instance and start new one
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.AWS_EC2_HOST }}
@@ -51,9 +57,13 @@ jobs:
           script: |
             cd ~/classvar-user-backend
             sudo docker-compose down
+            sudo docker stop $(sudo docker ps -a -q)
+            sudo docker rm $(sudo docker ps -a -q)
             cd ..
             rm -rf ./classvar-user-backend
             git clone https://github.com/classvar/classvar-user-backend
             cd ./classvar-user-backend
+            echo -e "SPRING_PROFILES_ACTIVE=${{ secrets.SPRING_PROFILES_ACTIVE }}\nSSL_PKCS12_PASSWORD=${{ secrets.SSL_PKCS12_PASSWORD }}" > .env
+            sudo docker login -u seongbin9786 -p ${{ secrets.DOCKER_HUB_PRIVATE_KEY }}
             sudo docker pull seongbin9786/classvar_backend
-            sudo docker-compose up -d
+            sudo docker-compose --env-file .env up -d
