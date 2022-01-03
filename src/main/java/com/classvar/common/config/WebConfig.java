@@ -18,8 +18,7 @@ public class WebConfig implements WebMvcConfigurer {
             .addInterceptor(new LoginCheckInterceptor())
             .order(1)
             .addPathPatterns("/api")
-            .excludePathPatterns("/api/signup")
-            .excludePathPatterns("/api/login");
+            .excludePathPatterns("/api/signup", "/api/login");
   }
 
   @Override
