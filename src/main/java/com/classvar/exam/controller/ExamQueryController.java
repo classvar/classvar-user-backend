@@ -15,14 +15,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Api(tags = "시험 API")
 @Controller
-@RequestMapping("/api")
+@RequestMapping("/exams")
 @RequiredArgsConstructor
 public class ExamQueryController {
 
   private final ExamQueryProcessor examQueryProcessor;
 
   @ApiOperation(value = "시험 정보", notes = "시험 정보를 가져옵니다.", tags = "시험 API")
-  @GetMapping(value = "/exams/{examId}")
+  @GetMapping(value = "/{examId}")
   public ResponseEntity getExamDetail(
       @RequestParam long courseId, @PathVariable("examId") long examId) {
 
@@ -32,14 +32,14 @@ public class ExamQueryController {
   }
 
   @ApiOperation(value = "시험 목록", notes = "시험 목록을 가져옵니다.", tags = "시험 API")
-  @GetMapping(value = "/exams")
+  @GetMapping
   public ResponseEntity getAllExamInfo(@RequestParam long courseId) {
 
     return ResponseEntity.status(HttpStatus.OK).body(examQueryProcessor.getExamList(courseId));
   }
 
   @ApiOperation(value = "문제 목록", notes = "해당 시험의 문제 목록을 가져옵니다.", tags = "시험 API")
-  @GetMapping(value = "/exams/{examId}/questions")
+  @GetMapping(value = "/{examId}/questions")
   public ResponseEntity getAllQuestion(
       @RequestParam long courseId, @PathVariable("examId") long examId) {
 

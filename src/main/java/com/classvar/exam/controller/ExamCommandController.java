@@ -20,7 +20,7 @@ import javax.validation.Valid;
 
 @Api(tags = "시험 API")
 @Controller
-@RequestMapping("/api")
+@RequestMapping("/exams")
 @RequiredArgsConstructor
 public class ExamCommandController {
 
@@ -28,7 +28,7 @@ public class ExamCommandController {
   private final StudentQueryProcessor studentQueryProcessor;
 
   @ApiOperation(value = "시험 생성", notes = "시험을 생성합니다.", tags = "시험 API")
-  @PostMapping(value = "/exams")
+  @PostMapping
   public ResponseEntity createExam(@Valid @RequestBody CreateOrUpdateExamDto dto) {
 
     examCommandExecutor.createExam(dto);
@@ -37,7 +37,7 @@ public class ExamCommandController {
   }
 
   @ApiOperation(value = "시험 수정", notes = "시험을 수정합니다.", tags = "시험 API")
-  @PutMapping(value = "exams/{examId}")
+  @PutMapping(value = "/{examId}")
   public ResponseEntity updateExam(
       @PathVariable("examId") long examId, @Valid @RequestBody CreateOrUpdateExamDto dto) {
 
@@ -47,7 +47,7 @@ public class ExamCommandController {
   }
 
   @ApiOperation(value = "시험 삭제", notes = "시험을 삭제합니다.", tags = "시험 API")
-  @DeleteMapping(value = "/exams/{examId}")
+  @DeleteMapping(value = "/{examId}")
   public ResponseEntity deleteExam(@PathVariable("examId") long examId) {
 
     examCommandExecutor.deleteExam(examId);
@@ -56,7 +56,7 @@ public class ExamCommandController {
   }
 
   @ApiOperation(value = "문제 생성", notes = "문제를 생성합니다.", tags = "시험 API")
-  @PostMapping(value = "/exams/{examId}/questions")
+  @PostMapping(value = "/{examId}/questions")
   public ResponseEntity createQuestion(
       @PathVariable("examId") Long examId, @RequestBody CreateOrUpdateQuestionDto dto) {
 
@@ -66,7 +66,7 @@ public class ExamCommandController {
   }
 
   @ApiOperation(value = "문제 수정", notes = "문제를 수정합니다.", tags = "시험 API")
-  @PutMapping(value = "/exams/{examId}/questions/{questionId}")
+  @PutMapping(value = "/{examId}/questions/{questionId}")
   public ResponseEntity updateQuestion(
       @PathVariable("examId") Long examId,
       @PathVariable("questionId") Long questionId,
@@ -78,7 +78,7 @@ public class ExamCommandController {
   }
 
   @ApiOperation(value = "문제 삭제", notes = "문제를 삭제합니다.", tags = "시험 API")
-  @DeleteMapping(value = "/exams/{examId}/questions/{questionId}")
+  @DeleteMapping(value = "/{examId}/questions/{questionId}")
   public ResponseEntity deleteQuestion(
       @PathVariable("examId") Long examId, @PathVariable("questionId") Long questionId) {
 
@@ -88,7 +88,7 @@ public class ExamCommandController {
   }
 
   @ApiOperation(value = "응시자 시험 입장", notes = "응시자가 시험에 입장합니다.", tags = "시험 API")
-  @PostMapping(value = "/exams/{examId}/students/{uuid}/join")
+  @PostMapping(value = "/{examId}/students/{uuid}/join")
   public ResponseEntity joinExam(
       @PathVariable("examId") Long examId,
       @PathVariable("uuid") String uuid,
