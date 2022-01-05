@@ -20,11 +20,14 @@ public class Admin {
   private String name;
   private String department;
 
-  public Admin(String email, String password, String name, String department) {
+  private String salt;
+
+  public Admin(String email, String password, String name, String department, String salt) {
     this.email = email;
     this.password = password;
     this.name = name;
     this.department = department;
+    this.salt = salt;
   }
 
   protected Admin() {}
