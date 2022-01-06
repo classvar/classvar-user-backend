@@ -1,6 +1,7 @@
 package com.classvar.admin.application;
 
 import com.classvar.admin.application.common.AdminMapper;
+import com.classvar.admin.application.common.PasswordEncoder;
 import com.classvar.admin.application.dto.CreateOrUpdateAdminDto;
 import com.classvar.admin.application.dto.LoginDto;
 import com.classvar.admin.domain.Admin;
@@ -15,11 +16,17 @@ public class AdminCommandExecutor {
 
   private final AdminRepository adminRepository;
   private final AdminMapper adminMapper;
+  private final PasswordEncoder passwordEncoder;
 
   public long signUp(CreateOrUpdateAdminDto dto) {
-    Admin admin = adminMapper.toUser(dto);
-    adminRepository.save(admin);
-    return admin.getId();
+    String salt = passwordEncoder.getSalt();
+    String hashedPW = passwordEncoder.encode(dto.getPassword(), salt);
+
+    Admin toRegister =
+        adminMapper.toAdmin(dto.getEmail(), hashedPW, dto.getName(), dto.getDepartment(), salt);
+    adminRepository.save(toRegister);
+
+    return toRegister.getId();
   }
 
   @Transactional
@@ -27,7 +34,8 @@ public class AdminCommandExecutor {
     Admin findAdmin =
         adminRepository
             .findByEmail(dto.getEmail())
-            .filter(a -> a.getPassword().equals(dto.getPassword()))
+            .filter(
+                a -> a.getPassword().equals(passwordEncoder.encode(dto.getPassword(), a.getSalt())))
             .orElse(null);
     if (findAdmin == null) return null;
     return findAdmin.getId();
