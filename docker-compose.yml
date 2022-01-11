@@ -11,5 +11,5 @@ services:
     # 참고: https://baeji77.github.io/spring/dev/Spring-boot-gradle-build/
     ports:
       # Spring App에선 8080 포트로 열려있기 때문에.
-      - 80:8080
-      - 443:8443 # Support HTTPS
+      - 80:80
+      - 443:443 # Support HTTPS
