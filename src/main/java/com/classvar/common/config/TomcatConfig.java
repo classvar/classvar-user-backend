@@ -30,11 +30,9 @@ public class TomcatConfig {
         return tomcat;
     }
 
-    @Value("${classvar.http.port}")
-    int httpPort;
+    int httpPort = 80;
 
-    @Value("${server.port}")
-    int httpsPort;
+    int httpsPort = 443;
 
     private Connector redirectConnector() {
         Connector connector = new Connector(TomcatServletWebServerFactory.DEFAULT_PROTOCOL);

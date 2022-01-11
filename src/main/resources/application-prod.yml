@@ -9,8 +9,3 @@ server:
     key-store-type: PKCS12
     key-store-password: ${SSL_PKCS12_PASSWORD}
   port: 8443
-
-# 따로 namespace가 없어서 직접 만듦.
-classvar:
-  http:
-    port: 8080

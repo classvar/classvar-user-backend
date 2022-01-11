@@ -10,8 +10,3 @@ server:
     key-store: classpath:SSL_CERTIFICATE_local.p12 # test
     key-store-type: PKCS12
     key-store-password: ${SSL_PKCS12_PASSWORD}
-
-# 따로 namespace가 없어서 직접 만듦.
-classvar:
-  http:
-    port: 80
