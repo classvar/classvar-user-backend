@@ -1,5 +1,6 @@
 # Support HTTPS
 server:
+  port: 443
   ssl:
     enabled: true
     enabled-protocols:
@@ -8,4 +9,3 @@ server:
     key-store: classpath:SSL_CERTIFICATE.p12
     key-store-type: PKCS12
     key-store-password: ${SSL_PKCS12_PASSWORD}
-  port: 8443
