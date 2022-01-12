@@ -97,7 +97,7 @@ public class ExamCommandController {
     Student student = studentQueryProcessor.getApprovedStudent(uuid);
 
     HttpSession session = request.getSession();
-    session.setAttribute(SessionConst.STUDENT, student);
+    session.setAttribute(SessionConst.SESSION_KEY_STUDENT, student);
 
     // TODO 응시자가 시험장에 입장하였을 경우 StudentExamInfo를 만들어 exam에 넣어준다.
 

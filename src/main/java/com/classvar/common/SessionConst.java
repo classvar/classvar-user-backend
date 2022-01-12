@@ -1,6 +1,6 @@
 package com.classvar.common;
 
 public class SessionConst {
-  public static final String LOGIN_ID = "loginId";
-  public static final String STUDENT = "student";
+  public static final String SESSION_KEY_ADMIN = "admin";
+  public static final String SESSION_KEY_STUDENT = "student";
 }

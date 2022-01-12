@@ -1,5 +1,6 @@
 package com.classvar.common.argumentresolver;
 
+import com.classvar.admin.application.dto.response.GetAdminInfoDto;
 import com.classvar.common.SessionConst;
 import org.springframework.core.MethodParameter;
 import org.springframework.web.bind.support.WebDataBinderFactory;
@@ -14,7 +15,7 @@ public class LoginUserArgumentResolver implements HandlerMethodArgumentResolver 
   @Override
   public boolean supportsParameter(MethodParameter parameter) {
     boolean hasLoginAnnotation = parameter.hasParameterAnnotation(Login.class);
-    boolean hasType = Long.class.isAssignableFrom(parameter.getParameterType());
+    boolean hasType = GetAdminInfoDto.class.isAssignableFrom(parameter.getParameterType());
 
     return hasLoginAnnotation && hasType;
   }
@@ -35,6 +36,6 @@ public class LoginUserArgumentResolver implements HandlerMethodArgumentResolver 
       return null;
     }
 
-    return session.getAttribute(SessionConst.LOGIN_ID);
+    return session.getAttribute(SessionConst.SESSION_KEY_ADMIN);
   }
 }

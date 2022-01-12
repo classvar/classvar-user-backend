@@ -1,4 +1,4 @@
-package com.classvar.admin.application.dto;
+package com.classvar.admin.application.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
