@@ -22,6 +22,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import static com.google.common.collect.Sets.newHashSet;
+
 @EnableSwagger2
 @Configuration
 public class SwaggerConfig {
@@ -46,7 +48,8 @@ public class SwaggerConfig {
         .select()
         .apis(RequestHandlerSelectors.basePackage("com.classvar"))
         .paths(PathSelectors.any())
-        .build();
+        .build()
+        .protocols(newHashSet("https"));
   }
 
   private List<ResponseMessage> setCommonResponse() {

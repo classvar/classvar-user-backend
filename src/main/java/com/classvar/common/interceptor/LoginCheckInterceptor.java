@@ -19,8 +19,11 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
     }
     HttpSession session = request.getSession();
 
+    boolean isNotLoggedIn =
+        session == null || session.getAttribute(SessionConst.SESSION_KEY_ADMIN) == null;
+
     // 미인증 사용자 요청
-    if (session == null || session.getAttribute(SessionConst.LOGIN_ID) == null) {
+    if (isNotLoggedIn) {
       throw new UnauthenticatedUserException("미인증 사용자 입니다");
     }
     return true;

@@ -1,8 +1,9 @@
 package com.classvar.admin.controller;
 
 import com.classvar.admin.application.AdminCommandExecutor;
-import com.classvar.admin.application.dto.CreateOrUpdateAdminDto;
-import com.classvar.admin.application.dto.LoginDto;
+import com.classvar.admin.application.dto.request.CreateOrUpdateAdminDto;
+import com.classvar.admin.application.dto.request.LoginDto;
+import com.classvar.admin.application.dto.response.GetAdminInfoDto;
 import com.classvar.common.SessionConst;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -35,15 +36,15 @@ public class AdminCommandController {
   @PostMapping(value = "/login")
   public ResponseEntity login(@Valid @RequestBody LoginDto dto, HttpServletRequest request) {
 
-    Long loginId = adminCommandExecutor.login(dto);
+    GetAdminInfoDto adminInfo = adminCommandExecutor.login(dto);
 
     // 로그인 실패
-    if (loginId == null) {
+    if (adminInfo == null) {
       throw new IllegalArgumentException("아이디 비밀번호가 일치하지 않습니다.");
     }
 
     HttpSession session = request.getSession();
-    session.setAttribute(SessionConst.LOGIN_ID, loginId);
+    session.setAttribute(SessionConst.SESSION_KEY_ADMIN, adminInfo);
     return ResponseEntity.status(HttpStatus.OK).build();
   }
 

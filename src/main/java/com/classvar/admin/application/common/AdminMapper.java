@@ -1,5 +1,6 @@
 package com.classvar.admin.application.common;
 
+import com.classvar.admin.application.dto.response.GetAdminInfoDto;
 import com.classvar.admin.domain.Admin;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -8,4 +9,6 @@ import org.mapstruct.Mapping;
 public interface AdminMapper {
   @Mapping(source = "hashedPW", target = "password")
   Admin toAdmin(String email, String hashedPW, String name, String department, String salt);
+
+  GetAdminInfoDto toAdminInfoDto(Admin admin);
 }

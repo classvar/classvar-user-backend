@@ -2,8 +2,9 @@ package com.classvar.admin.application;
 
 import com.classvar.admin.application.common.AdminMapper;
 import com.classvar.admin.application.common.PasswordEncoder;
-import com.classvar.admin.application.dto.CreateOrUpdateAdminDto;
-import com.classvar.admin.application.dto.LoginDto;
+import com.classvar.admin.application.dto.request.CreateOrUpdateAdminDto;
+import com.classvar.admin.application.dto.request.LoginDto;
+import com.classvar.admin.application.dto.response.GetAdminInfoDto;
 import com.classvar.admin.domain.Admin;
 import com.classvar.admin.domain.AdminRepository;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +31,7 @@ public class AdminCommandExecutor {
   }
 
   @Transactional
-  public Long login(LoginDto dto) {
+  public GetAdminInfoDto login(LoginDto dto) {
     Admin findAdmin =
         adminRepository
             .findByEmail(dto.getEmail())
@@ -38,6 +39,6 @@ public class AdminCommandExecutor {
                 a -> a.getPassword().equals(passwordEncoder.encode(dto.getPassword(), a.getSalt())))
             .orElse(null);
     if (findAdmin == null) return null;
-    return findAdmin.getId();
+    return adminMapper.toAdminInfoDto(findAdmin);
   }
 }
