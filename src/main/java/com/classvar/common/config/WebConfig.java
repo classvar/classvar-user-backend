@@ -38,18 +38,6 @@ public class WebConfig implements WebMvcConfigurer {
             "https://classvar.com", "http://localhost:3000", "http://localhost:3001");
   }
 
-  // SameSite=None을 추가하는 필터
-  // SameSite=None 옵션은 HTTPS에서만 작동한다.
-  // Secure 옵션도 지정돼야 하는데, Spring Boot에서 Session 설정이 기본으로 httpOnly, Secure = true로 되어있는 듯하다.
-  @Bean
-  public TomcatContextCustomizer sameSiteCookiesConfig() {
-    return context -> {
-      final Rfc6265CookieProcessor cookieProcessor = new Rfc6265CookieProcessor();
-      cookieProcessor.setSameSiteCookies(SameSiteCookies.NONE.getValue());
-      context.setCookieProcessor(cookieProcessor);
-    };
-  }
-
   @Override
   public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
     resolvers.add(new LoginUserArgumentResolver());
