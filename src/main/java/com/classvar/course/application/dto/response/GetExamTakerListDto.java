@@ -1,4 +1,4 @@
-package com.classvar.student.application.dto.response;
+package com.classvar.course.application.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,6 +10,6 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class GetStudentListDto {
-    List<GetStudentDto> students = new ArrayList<>();
+public class GetExamTakerListDto {
+  List<GetExamTakerDto> students = new ArrayList<>();
 }
