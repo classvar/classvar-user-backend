@@ -2,6 +2,7 @@ package com.classvar.common.config;
 
 import com.classvar.common.argumentresolver.LoginUserArgumentResolver;
 import com.classvar.common.interceptor.LoginCheckInterceptor;
+import com.classvar.common.interceptor.SameSiteCookieInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -21,6 +22,11 @@ public class WebConfig implements WebMvcConfigurer {
         .excludePathPatterns("/signup", "/login", "/logout")
         .excludePathPatterns(
             "/swagger-ui.html", "/v2/api-docs", "/swagger-resources/**", "/webjars/**");
+
+    registry
+        .addInterceptor(new SameSiteCookieInterceptor())
+        .order(2)
+        .addPathPatterns("/**");
   }
 
   @Override
