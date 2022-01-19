@@ -1,12 +1,10 @@
 package com.classvar.course.application;
 
 import com.classvar.course.application.common.CourseMapper;
-import com.classvar.course.application.dto.request.ApproveExamTakerDto;
-import com.classvar.course.application.dto.request.CreateExamTakerDto;
-import com.classvar.course.application.dto.request.CreateOrUpdateCourseDto;
-import com.classvar.course.application.dto.request.DeleteExamTakerDto;
+import com.classvar.course.application.dto.request.*;
 import com.classvar.course.domain.Course;
 import com.classvar.course.domain.CourseRepository;
+import com.classvar.course.domain.ExamSupervisor;
 import com.classvar.course.domain.ExamTaker;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -50,12 +48,12 @@ public class CourseCommandExecutor {
   }
 
   @Transactional
-  public void createExamTakers(long courseId, CreateExamTakerDto dto) {
+  public void createExamTakers(long courseId, CreateExamParticipantsDto dto) {
     Course course = findByCourseId(courseId);
 
-    ExamTaker examTaker = courseMapper.toExamTaker(dto);
+    ExamTaker examTaker = (ExamTaker) courseMapper.toExamParticipants(dto);
 
-    course.addExamTaker(examTaker);
+    course.addExamParticipants(examTaker);
   }
 
   @Transactional
@@ -75,6 +73,35 @@ public class CourseCommandExecutor {
 
     for (Long examTakerId : dto.getExamTakerIds()) {
       course.removeExamTaker(examTakerId);
+    }
+  }
+
+  @Transactional
+  public void createExamSupervisor(long courseId, CreateExamParticipantsDto dto) {
+    Course course = findByCourseId(courseId);
+
+    ExamSupervisor examSupervisor = (ExamSupervisor) courseMapper.toExamParticipants(dto);
+
+    course.addExamParticipants(examSupervisor);
+  }
+
+  @Transactional
+  public void approveExamSupervisor(long courseId, ApproveExamSupervisorDto dto) {
+    Course course = findByCourseId(courseId);
+
+    for (Long examSupervisorId : dto.getExamSupervisorIds()) {
+      course.approveSupervisor(examSupervisorId);
+
+      // createdEvent 발생 -> 학생에게 시험장 url 포함된 email 전송
+    }
+  }
+
+  @Transactional
+  public void deleteExamSupervisor(long courseId, DeleteExamSupervisorDto dto) {
+    Course course = findByCourseId(courseId);
+
+    for (Long examSupervisorId : dto.getExamSupervisorIds()) {
+      course.removeExamTaker(examSupervisorId);
     }
   }
 }

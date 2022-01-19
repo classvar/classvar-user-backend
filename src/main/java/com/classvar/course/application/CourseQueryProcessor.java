@@ -1,12 +1,8 @@
 package com.classvar.course.application;
 
 import com.classvar.course.application.common.CourseMapper;
-import com.classvar.course.application.dto.response.GetCourseDto;
-import com.classvar.course.application.dto.response.GetExamTakerDto;
-import com.classvar.course.application.dto.response.GetExamTakerListDto;
-import com.classvar.course.domain.CourseRepository;
-import com.classvar.course.domain.ExamTaker;
-import com.classvar.course.domain.ExamTakerRepository;
+import com.classvar.course.application.dto.response.*;
+import com.classvar.course.domain.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
@@ -21,6 +17,7 @@ public class CourseQueryProcessor {
 
   private final CourseRepository courseRepository;
   private final ExamTakerRepository examTakerRepository;
+  private final ExamSupervisorRepository examSupervisorRepository;
   private final CourseMapper courseMapper;
 
   public List<GetCourseDto> getCourseList() {
@@ -49,5 +46,27 @@ public class CourseQueryProcessor {
     }
 
     return examTaker;
+  }
+
+  public GetExamSupervisorListDto getAllExamSupervisorsOfCourse(long courseId) {
+    List<GetExamSupervisorDto> examSupervisors =
+        examSupervisorRepository.findAllExamSupervisorsByCourseId(courseId).stream()
+            .map(courseMapper::toExamSupervisorInfoDto)
+            .collect(Collectors.toList());
+
+    return new GetExamSupervisorListDto(examSupervisors);
+  }
+
+  public ExamSupervisor getApprovedExamSupervisor(String uuid) {
+    ExamSupervisor examSupervisor =
+        examSupervisorRepository
+            .findByUuid(uuid)
+            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 감독관 입니다."));
+
+    if (!examSupervisor.getApproved()) {
+      throw new IllegalArgumentException("승인 대기중 입니다.");
+    }
+
+    return examSupervisor;
   }
 }

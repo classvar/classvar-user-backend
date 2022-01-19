@@ -6,10 +6,10 @@ import javax.persistence.*;
 import java.util.Objects;
 import java.util.UUID;
 
-@Entity
 @Getter
-@AttributeOverride(name = "participantsId", column = @Column(name = "STUDENT_ID"))
-public class ExamTaker extends AbstractUser {
+@Entity
+@AttributeOverride(name = "participantsId", column = @Column(name = "MANAGER_ID"))
+public class ExamSupervisor extends AbstractUser {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,11 +26,11 @@ public class ExamTaker extends AbstractUser {
   @JoinColumn(name = "course_id")
   private Course course;
 
-  protected ExamTaker() {
+  protected ExamSupervisor() {
     super(null, null, null, null);
   }
 
-  public ExamTaker(
+  public ExamSupervisor(
       String name, String department, String participantsId, String email, UserRole role) {
     super(name, department, participantsId, email);
     this.role = role;
@@ -49,10 +49,10 @@ public class ExamTaker extends AbstractUser {
   @Override
   public boolean equals(Object another) {
     if (another == null) return false;
-    if (!(another instanceof ExamTaker)) return false;
+    if (!(another instanceof ExamSupervisor)) return false;
     if (this == another) return true;
 
-    return this.id == ((ExamTaker) another).id;
+    return this.id == ((ExamSupervisor) another).id;
   }
 
   @Override

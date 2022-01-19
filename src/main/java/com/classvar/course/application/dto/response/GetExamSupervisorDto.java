@@ -9,11 +9,11 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class GetExamTakerDto {
+public class GetExamSupervisorDto {
   private long id;
   private String name;
   private String department;
-  private String studentId;
+  private String managerId;
   private String email;
   private boolean approved;
 }

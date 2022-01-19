@@ -2,6 +2,7 @@ package com.classvar.course.controller;
 
 import com.classvar.course.application.CourseQueryProcessor;
 import com.classvar.course.application.dto.response.GetCourseListDto;
+import com.classvar.course.application.dto.response.GetExamSupervisorListDto;
 import com.classvar.course.application.dto.response.GetExamTakerListDto;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -33,8 +34,16 @@ public class CourseQueryController {
   @ApiOperation(value = "응시자 목록", notes = "응시자 목록을 가져옵니다.", tags = "코스 API")
   @GetMapping(value = "/{courseId}/examTakers")
   public ResponseEntity getAllExamTakerInfo(@PathVariable("courseId") long courseId) {
-    GetExamTakerListDto students = courseQueryProcessor.getAllExamTakersOfCourse(courseId);
+    GetExamTakerListDto examTakerInfos = courseQueryProcessor.getAllExamTakersOfCourse(courseId);
 
-    return ResponseEntity.status(HttpStatus.OK).body(students);
+    return ResponseEntity.status(HttpStatus.OK).body(examTakerInfos);
+  }
+
+  @ApiOperation(value = "감독관 목록", notes = "감독관 목록을 가져옵니다.", tags = "코스 API")
+  @GetMapping("/{courseId}/examSupervisors")
+  public ResponseEntity getAllExamSupervisorInfo(@PathVariable("courseId") long courseId) {
+    GetExamSupervisorListDto examSupervisorInfos =
+        courseQueryProcessor.getAllExamSupervisorsOfCourse(courseId);
+    return ResponseEntity.status(HttpStatus.OK).body(examSupervisorInfos);
   }
 }
