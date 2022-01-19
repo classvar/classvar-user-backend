@@ -33,7 +33,7 @@ public class CourseQueryController {
   @ApiOperation(value = "응시자 목록", notes = "응시자 목록을 가져옵니다.", tags = "코스 API")
   @GetMapping(value = "/{courseId}/examTakers")
   public ResponseEntity getAllExamTakerInfo(@PathVariable("courseId") long courseId) {
-    GetExamTakerListDto students = courseQueryProcessor.getExamTakerList(courseId);
+    GetExamTakerListDto students = courseQueryProcessor.getAllExamTakersOfCourse(courseId);
 
     return ResponseEntity.status(HttpStatus.OK).body(students);
   }

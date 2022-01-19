@@ -6,5 +6,5 @@ import java.util.Optional;
 public interface ExamTakerRepository {
   Optional<ExamTaker> findByUuid(String uuid);
 
-  List<ExamTaker> findExamTakerByCourseId(Long courseId);
+  List<ExamTaker> findAllExamTakersByCourseId(Long courseId);
 }

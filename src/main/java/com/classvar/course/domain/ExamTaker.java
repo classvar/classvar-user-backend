@@ -12,7 +12,7 @@ import java.util.UUID;
   @AttributeOverride(name = "uuid", column = @Column(name = "EXAM_TAKER_UUID")),
   @AttributeOverride(name = "role", column = @Column(name = "EXAM_TAKER_ROLE"))
 })
-public class ExamTaker extends User {
+public class ExamTaker extends AbstractUser {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,23 +28,15 @@ public class ExamTaker extends User {
   @JoinColumn(name = "course_id")
   private Course course;
 
-  protected ExamTaker() {}
-
-  public ExamTaker(String name, String department, String studentId, String email) {
-    this.setName(name);
-    this.setDepartment(department);
-    this.studentId = studentId;
-    this.setEmail(email);
-    this.setUuid(UUID.randomUUID().toString());
-    this.approved = false;
-    this.role = UserRole.ExamTaker;
+  protected ExamTaker() {
+    super(null, null, null, null);
   }
 
-  public void updateExamTakerInfo(ExamTaker updatePayload) {
-    this.setName(updatePayload.getName());
-    this.setDepartment(updatePayload.getDepartment());
-    this.setEmail(updatePayload.getEmail());
-    this.studentId = updatePayload.getStudentId();
+  public ExamTaker(String name, String department, String studentId, String email) {
+    super(name, department, email, UUID.randomUUID().toString());
+    this.studentId = studentId;
+    this.approved = false;
+    this.role = UserRole.ExamTaker;
   }
 
   public void setApproved() {

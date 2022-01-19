@@ -1,7 +1,10 @@
 package com.classvar.course.controller;
 
 import com.classvar.course.application.CourseCommandExecutor;
-import com.classvar.course.application.dto.request.*;
+import com.classvar.course.application.dto.request.ApproveExamTakerDto;
+import com.classvar.course.application.dto.request.CreateExamTakerDto;
+import com.classvar.course.application.dto.request.CreateOrUpdateCourseDto;
+import com.classvar.course.application.dto.request.DeleteExamTakerDto;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -48,24 +51,12 @@ public class CourseCommandController {
     return ResponseEntity.status(HttpStatus.OK).build();
   }
 
-  @ApiOperation(value = "응시자 생성", notes = "응시자를 생성합니다.", tags = "코스 API")
-  @PostMapping(value = "/{courseId}/examTakers")
+  @ApiOperation(value = "응시자 정보 등록", notes = "응시자 정보를 등록합니다.", tags = "코스 API")
+  @PostMapping(value = "/{courseId}/examTakers/registry")
   public ResponseEntity createExamTaker(
       @PathVariable("courseId") long courseId, @Valid @RequestBody CreateExamTakerDto dto) {
 
     courseCommandExecutor.createExamTakers(courseId, dto);
-
-    return ResponseEntity.status(HttpStatus.OK).build();
-  }
-
-  @ApiOperation(value = "응시자 정보 등록", notes = "응시자 정보를 등록합니다.", tags = "코스 API")
-  @PutMapping(value = "/{courseId}/examTakers/registry/{uuid}")
-  public ResponseEntity registerExamTaker(
-      @PathVariable("courseId") long courseId,
-      @PathVariable("uuid") String uuid,
-      @Valid @RequestBody UpdateExamTakerInfoDto dto) {
-
-    courseCommandExecutor.updateExamTaker(courseId, uuid, dto);
 
     return ResponseEntity.status(HttpStatus.OK).build();
   }

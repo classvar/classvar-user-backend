@@ -1,7 +1,10 @@
 package com.classvar.course.application;
 
 import com.classvar.course.application.common.CourseMapper;
-import com.classvar.course.application.dto.request.*;
+import com.classvar.course.application.dto.request.ApproveExamTakerDto;
+import com.classvar.course.application.dto.request.CreateExamTakerDto;
+import com.classvar.course.application.dto.request.CreateOrUpdateCourseDto;
+import com.classvar.course.application.dto.request.DeleteExamTakerDto;
 import com.classvar.course.domain.Course;
 import com.classvar.course.domain.CourseRepository;
 import com.classvar.course.domain.ExamTaker;
@@ -50,17 +53,9 @@ public class CourseCommandExecutor {
   public void createExamTakers(long courseId, CreateExamTakerDto dto) {
     Course course = findByCourseId(courseId);
 
-    courseMapper.toExamTakers(dto).forEach(course::addExamTaker);
-
-    // createdEvent 발생 -> 학생에게 등록하는 url 포함된 email 전송
-  }
-
-  @Transactional
-  public void updateExamTaker(long courseId, String uuid, UpdateExamTakerInfoDto dto) {
-    Course course = findByCourseId(courseId);
-
     ExamTaker examTaker = courseMapper.toExamTaker(dto);
-    course.updateExamTaker(uuid, examTaker);
+
+    course.addExamTaker(examTaker);
   }
 
   @Transactional
@@ -69,6 +64,8 @@ public class CourseCommandExecutor {
 
     for (Long examTakerId : dto.getExamTakerIds()) {
       course.approveExamTaker(examTakerId);
+
+      // createdEvent 발생 -> 학생에게 시험장 url 포함된 email 전송
     }
   }
 

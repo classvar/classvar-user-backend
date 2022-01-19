@@ -33,16 +33,6 @@ public class Course {
     this.examTakers.add(examTaker);
   }
 
-  public void updateExamTaker(String uuid, ExamTaker updatePayload) {
-    for (ExamTaker examTaker : this.examTakers) {
-      if (examTaker.getUuid().equals(uuid)) {
-        examTaker.updateExamTakerInfo(updatePayload);
-        return;
-      }
-    }
-    throw new IllegalArgumentException("존재하지 않는 응시자 입니다.");
-  }
-
   public void removeExamTaker(Long examTakerId) {
     if (!this.examTakers.removeIf(examTaker -> examTaker.getId() == examTakerId)) {
       throw new IllegalArgumentException("존재하지 않는 응시자 입니다.");

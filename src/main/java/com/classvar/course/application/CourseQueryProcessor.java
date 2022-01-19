@@ -29,9 +29,9 @@ public class CourseQueryProcessor {
         .collect(Collectors.toList());
   }
 
-  public GetExamTakerListDto getExamTakerList(long courseId) {
+  public GetExamTakerListDto getAllExamTakersOfCourse(long courseId) {
     List<GetExamTakerDto> examTakers =
-        examTakerRepository.findExamTakerByCourseId(courseId).stream()
+        examTakerRepository.findAllExamTakersByCourseId(courseId).stream()
             .map(courseMapper::toExamTakerInfoDto)
             .collect(Collectors.toList());
 

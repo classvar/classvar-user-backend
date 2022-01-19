@@ -1,14 +1,12 @@
 package com.classvar.course.domain;
 
 import lombok.Getter;
-import lombok.Setter;
 
 import javax.persistence.MappedSuperclass;
 
 @Getter
-@Setter
 @MappedSuperclass
-public abstract class User {
+public abstract class AbstractUser {
   private String name;
 
   private String department;
@@ -16,4 +14,11 @@ public abstract class User {
   private String email;
 
   private String uuid;
+
+  public AbstractUser(String name, String department, String email, String uuid) {
+    this.name = name;
+    this.department = department;
+    this.email = email;
+    this.uuid = uuid;
+  }
 }
