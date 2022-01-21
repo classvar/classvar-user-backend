@@ -21,7 +21,7 @@ public class Question {
 
   @ElementCollection
   @CollectionTable(name = "question_choice")
-  private List<QuestionChoice> description;
+  private List<QuestionChoice> choices;
 
   private int point;
 
@@ -32,18 +32,18 @@ public class Question {
   protected Question() {}
 
   public Question(
-      Long id, String name, QuestionType type, List<QuestionChoice> description, int point) {
+          Long id, String name, QuestionType type, List<QuestionChoice> choices, int point) {
     this.id = id;
     this.name = name;
     this.type = type;
-    this.description = description;
+    this.choices = choices;
     this.point = point;
   }
 
   public void updateQuestionInfo(Question updatePayload) {
     this.name = updatePayload.getName();
     this.type = updatePayload.getType();
-    this.description = updatePayload.getDescription();
+    this.choices = updatePayload.getChoices();
     this.point = updatePayload.getPoint();
   }
 
