@@ -6,7 +6,7 @@ import javax.persistence.MappedSuperclass;
 
 @Getter
 @MappedSuperclass
-public abstract class AbstractUser {
+public abstract class AbstractExamParticipant {
   private String name;
 
   private String department;
@@ -15,7 +15,8 @@ public abstract class AbstractUser {
 
   private String email;
 
-  public AbstractUser(String name, String department, String participantsId, String email) {
+  public AbstractExamParticipant(
+      String name, String department, String participantsId, String email) {
     this.name = name;
     this.department = department;
     this.participantsId = participantsId;

@@ -8,6 +8,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Log4j2
@@ -16,8 +17,8 @@ import java.util.stream.Collectors;
 public class CourseQueryProcessor {
 
   private final CourseRepository courseRepository;
-  private final ExamTakerRepository examTakerRepository;
-  private final ExamSupervisorRepository examSupervisorRepository;
+  private final ReadOnlyExamTakerRepository readOnlyExamTakerRepository;
+  private final ReadOnlyExamSupervisorRepository readOnlyExamSupervisorRepository;
   private final CourseMapper courseMapper;
 
   public List<GetCourseDto> getCourseList() {
@@ -28,17 +29,17 @@ public class CourseQueryProcessor {
 
   public GetExamTakerListDto getAllExamTakersOfCourse(long courseId) {
     List<GetExamTakerDto> examTakers =
-        examTakerRepository.findAllExamTakersByCourseId(courseId).stream()
+        readOnlyExamTakerRepository.findAllExamTakersByCourseId(courseId).stream()
             .map(courseMapper::toExamTakerInfoDto)
             .collect(Collectors.toList());
 
     return new GetExamTakerListDto(examTakers);
   }
 
-  public ExamTaker getApprovedExamTaker(String uuid) {
+  public ExamTaker getApprovedExamTaker(UUID uuid) {
     ExamTaker examTaker =
-        examTakerRepository
-            .findByUuid(uuid)
+        readOnlyExamTakerRepository
+            .findByExamEntranceUUID(uuid)
             .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 응시자 입니다."));
 
     if (!examTaker.getApproved()) {
@@ -50,17 +51,17 @@ public class CourseQueryProcessor {
 
   public GetExamSupervisorListDto getAllExamSupervisorsOfCourse(long courseId) {
     List<GetExamSupervisorDto> examSupervisors =
-        examSupervisorRepository.findAllExamSupervisorsByCourseId(courseId).stream()
+        readOnlyExamSupervisorRepository.findAllExamSupervisorsByCourseId(courseId).stream()
             .map(courseMapper::toExamSupervisorInfoDto)
             .collect(Collectors.toList());
 
     return new GetExamSupervisorListDto(examSupervisors);
   }
 
-  public ExamSupervisor getApprovedExamSupervisor(String uuid) {
+  public ExamSupervisor getApprovedExamSupervisor(UUID uuid) {
     ExamSupervisor examSupervisor =
-        examSupervisorRepository
-            .findByUuid(uuid)
+        readOnlyExamSupervisorRepository
+            .findByExamEntranceUUID(uuid)
             .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 감독관 입니다."));
 
     if (!examSupervisor.getApproved()) {

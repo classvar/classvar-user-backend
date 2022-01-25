@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.UUID;
 
 @Api(tags = "시험 API")
 @Controller
@@ -91,7 +92,7 @@ public class ExamCommandController {
   @PostMapping(value = "/{examId}/students/{uuid}/join")
   public ResponseEntity joinExam(
       @PathVariable("examId") Long examId,
-      @PathVariable("uuid") String uuid,
+      @PathVariable("uuid") UUID uuid,
       HttpServletRequest request) {
 
     ExamTaker examTaker = courseQueryProcessor.getApprovedExamTaker(uuid);

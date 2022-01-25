@@ -8,8 +8,8 @@ import java.util.UUID;
 
 @Entity
 @Getter
-@AttributeOverride(name = "participantsId", column = @Column(name = "STUDENT_ID"))
-public class ExamTaker extends AbstractUser {
+@AttributeOverride(name = "participantsId", column = @Column(name = "student_id"))
+public class ExamTaker extends AbstractExamParticipant {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,9 +18,10 @@ public class ExamTaker extends AbstractUser {
   @Enumerated(value = EnumType.STRING)
   private UserRole role;
 
-  private String uuid;
-
   private Boolean approved;
+
+  @Column(columnDefinition = "BINARY(16)")
+  private UUID examEntranceUUID;
 
   @ManyToOne
   @JoinColumn(name = "course_id")
@@ -35,7 +36,7 @@ public class ExamTaker extends AbstractUser {
     super(name, department, participantsId, email);
     this.role = role;
     this.approved = false;
-    this.uuid = UUID.randomUUID().toString();
+    this.examEntranceUUID = UUID.randomUUID();
   }
 
   public void setApproved() {
@@ -57,6 +58,6 @@ public class ExamTaker extends AbstractUser {
 
   @Override
   public int hashCode() {
-    return Objects.hash(this.id, this.uuid);
+    return Objects.hash(this.id);
   }
 }

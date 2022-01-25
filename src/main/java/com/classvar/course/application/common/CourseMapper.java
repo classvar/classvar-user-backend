@@ -22,7 +22,7 @@ public interface CourseMapper {
   @Mapping(source = "participantsId", target = "managerId")
   GetExamSupervisorDto toExamSupervisorInfoDto(ExamSupervisor examSupervisor);
 
-  default AbstractUser toExamParticipants(CreateExamParticipantsDto dto) {
+  default AbstractExamParticipant toExamParticipants(CreateExamParticipantsDto dto) {
     if (dto.getRole().equals(UserRole.ExamTaker)) {
       ExamTaker examTaker =
           new ExamTaker(

@@ -7,7 +7,7 @@ import org.hibernate.annotations.OnDeleteAction;
 import javax.persistence.*;
 
 @Entity
-@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"student_id", "exam_id"})})
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"examTaker_id", "exam_id"})})
 public class StudentExamInfo {
 
   @Id
@@ -15,7 +15,7 @@ public class StudentExamInfo {
   Long id;
 
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "student_id")
+  @JoinColumn(name = "examTaker_id")
   @OnDelete(action = OnDeleteAction.CASCADE)
   private ExamTaker examTaker;
 
