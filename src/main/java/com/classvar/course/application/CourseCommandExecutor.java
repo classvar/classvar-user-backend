@@ -53,7 +53,7 @@ public class CourseCommandExecutor {
 
     ExamTaker examTaker = (ExamTaker) courseMapper.toExamParticipants(dto);
 
-    course.addExamParticipants(examTaker);
+    course.addExamTaker(examTaker);
   }
 
   @Transactional
@@ -82,7 +82,7 @@ public class CourseCommandExecutor {
 
     ExamSupervisor examSupervisor = (ExamSupervisor) courseMapper.toExamParticipants(dto);
 
-    course.addExamParticipants(examSupervisor);
+    course.addExamSupervisor(examSupervisor);
   }
 
   @Transactional
@@ -101,7 +101,7 @@ public class CourseCommandExecutor {
     Course course = findByCourseId(courseId);
 
     for (Long examSupervisorId : dto.getExamSupervisorIds()) {
-      course.removeExamTaker(examSupervisorId);
+      course.removeSupervisor(examSupervisorId);
     }
   }
 }
