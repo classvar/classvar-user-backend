@@ -1,4 +1,4 @@
-package com.classvar.manager.application.dto.request;
+package com.classvar.course.application.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,6 +9,6 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ApproveManagerDto {
-    private List<Long> managerIds;
+public class DeleteExamSupervisorDto {
+  private List<Long> examSupervisorIds;
 }

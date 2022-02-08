@@ -1,4 +1,4 @@
-package com.classvar.student.application.dto.request;
+package com.classvar.course.application.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,6 +9,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class DeleteStudentsDto {
-    private List<Long> studentIds;
+public class GetExamSupervisorListDto {
+
+  List<GetExamSupervisorDto> managers;
 }
